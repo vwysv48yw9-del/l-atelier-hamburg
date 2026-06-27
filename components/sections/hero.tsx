@@ -94,18 +94,18 @@ export function Hero() {
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col justify-end min-h-[100svh] pb-20 sm:pb-24 md:pb-32">
+      <div className="relative z-10 flex flex-col justify-end min-h-[100svh] pb-28 sm:pb-24 md:pb-32">
         <div className="w-full max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
 
           {/* Eyebrow */}
           <motion.div
-            className="flex items-center gap-4 mb-6"
+            className="flex items-center gap-4 mb-6 min-w-0"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.9, ease: EASE }}
           >
             <div className="w-7 h-px shrink-0" style={{ backgroundColor: "#a08868" }} />
-            <p className="text-[10px] tracking-[0.38em] uppercase font-medium" style={{ color: "#a08868" }}>
+            <p className="text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.38em] uppercase font-medium whitespace-nowrap" style={{ color: "#a08868" }}>
               {SALON.district} · {SALON.street}
             </p>
           </motion.div>
@@ -172,9 +172,9 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll-Indikator */}
+      {/* Scroll-Indikator — nur Desktop (auf Mobile überlappt der Sticky-Bar) */}
       <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none flex flex-col items-center gap-1.5"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none hidden sm:flex flex-col items-center gap-1.5"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.8 }}

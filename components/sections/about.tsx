@@ -21,7 +21,7 @@ export function About() {
     target: sectionRef,
     offset: ["start end", "end start"],
   })
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-7%", "7%"])
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"])
 
   return (
     <section ref={sectionRef} id="salon" className="grid grid-cols-1 lg:grid-cols-2">
@@ -36,15 +36,14 @@ export function About() {
         transition={{ duration: 1.1, ease: EASE }}
       >
         {/* Parallax-Container – scale:1.12 gibt Spielraum für Parallax + Hover-Zoom */}
-        <motion.div className="absolute inset-0" style={{ y: imageY, scale: 1.12 }}>
+        <motion.div className="absolute inset-0" style={{ y: imageY, scale: 1.08 }}>
           <Image
             src="/images/aussen.png"
             alt="L'Atelier Hamburg – Außenansicht Reinskamp 2A"
             fill
             loading="lazy"
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
-            style={{ objectPosition: "20% 22%" }}
+            className="object-cover [object-position:0%_22%]"
           />
         </motion.div>
 

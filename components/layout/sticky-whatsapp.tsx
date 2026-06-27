@@ -28,8 +28,9 @@ export function StickyWhatsApp() {
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
         >
-          <div className="m-3">
+          <div className="mx-3 mt-3 mb-3">
             <motion.a
               href={WA_URL}
               target="_blank"

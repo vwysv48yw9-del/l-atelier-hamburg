@@ -36,13 +36,13 @@ export function Services() {
     <section
       id="leistungen"
       style={{ backgroundColor: "#1c1f1f" }}
-      className="py-36 md:py-56"
+      className="py-24 md:py-56"
     >
       <div className="max-w-5xl mx-auto px-8 sm:px-12 md:px-20">
 
         {/* Section-Header */}
         <motion.div
-          className="mb-24 md:mb-36"
+          className="mb-16 md:mb-36"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
@@ -75,14 +75,14 @@ export function Services() {
               {/* Trenner zwischen Gruppen */}
               {gi > 0 && (
                 <div
-                  className="my-20 md:my-28"
+                  className="my-14 md:my-28"
                   style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.06)" }}
                 />
               )}
 
               {/* Kategorie-Name — zentriert, dezent */}
               <motion.div
-                className="text-center mb-14 md:mb-20"
+                className="text-center mb-10 md:mb-20"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-40px" }}
@@ -183,7 +183,7 @@ export function Services() {
 
         {/* Footer */}
         <motion.div
-          className="mt-28 md:mt-44 pt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+          className="mt-20 md:mt-44 pt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

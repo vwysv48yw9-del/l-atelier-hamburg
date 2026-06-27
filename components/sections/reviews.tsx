@@ -127,7 +127,7 @@ export function Reviews() {
   const right = TODO_REVIEWS.filter((_, i) => i % 2 === 1)
 
   return (
-    <section id="bewertungen" className="relative py-28 md:py-40" style={{ backgroundColor: "#faf8f5" }}>
+    <section id="bewertungen" className="relative py-20 md:py-40" style={{ backgroundColor: "#faf8f5" }}>
 
       {/* Scrim oben – Schatten von Craft (dunkel) */}
       <div

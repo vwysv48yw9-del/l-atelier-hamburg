@@ -25,7 +25,7 @@ const inputBase: React.CSSProperties = {
 
 export function Contact() {
   return (
-    <section id="kontakt" className="relative py-32 md:py-48" style={{ backgroundColor: "#1c1f1f" }}>
+    <section id="kontakt" className="relative py-20 md:py-48" style={{ backgroundColor: "#1c1f1f" }}>
 
       {/* Scrim oben – Übergang von Reviews (hell) */}
       <div

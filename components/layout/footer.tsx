@@ -13,7 +13,7 @@ const fadeUp = (delay = 0) => ({
 
 export function Footer() {
   return (
-    <footer style={{ backgroundColor: "#131210" }} className="border-t border-white/[0.05]">
+    <footer style={{ backgroundColor: "#131210", paddingBottom: "env(safe-area-inset-bottom, 0px)" }} className="border-t border-white/[0.05]">
 
       {/* Hauptbereich */}
       <motion.div

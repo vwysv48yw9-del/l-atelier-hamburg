@@ -18,7 +18,7 @@ export function VisualBreak() {
     <section
       ref={ref}
       className="relative overflow-hidden"
-      style={{ minHeight: "clamp(520px, 82vh, 960px)" }}
+      style={{ minHeight: "clamp(480px, 82vh, 960px)" }}
     >
       {/* Parallax-Bild — andere Ausschnitt als Hero (Stühle, Spiegel, Boden) */}
       <motion.div className="absolute inset-0" style={{ y, scale: 1.22 }}>

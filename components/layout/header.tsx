@@ -57,7 +57,7 @@ export function Header() {
   return (
     <>
       {/* Outer fixed shell — pointer-events-none so hero clicks pass through gaps */}
-      <div className="fixed inset-x-0 top-0 z-50 pointer-events-none">
+      <div className="fixed inset-x-0 top-0 z-50 pointer-events-none" style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}>
 
         <header
           className={cn(
@@ -205,6 +205,8 @@ export function Header() {
                 backdropFilter: "blur(40px)",
                 WebkitBackdropFilter: "blur(40px)",
                 borderLeft: "1px solid rgba(255,255,255,0.055)",
+                paddingTop: "env(safe-area-inset-top, 0px)",
+                paddingBottom: "env(safe-area-inset-bottom, 0px)",
               }}
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
