@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Projekt-Tokens (aus den Salon-Fotos abgeleitet) ─────────
+   --color-bg      Seitenhintergrund   warmes Weiß
+   --color-warm    Abschnitts-Bg       Betonboden innen
+   --color-dark    Primäres Dunkel     Wellblech / Türrahmen
+   --color-deeper  Tiefstes Dunkel     für Overlays
+   --color-accent  Akzent              Mörtelfuge / Treppenstein
+   --color-brick   Backstein           nur für Foto-Referenz
+──────────────────────────────────────────────────────────── */
+:root {
+  --color-bg:     #faf8f5;
+  --color-warm:   #f0eeeb;
+  --color-dark:   #1b1e1e;
+  --color-deeper: #141412;
+  --color-accent: #a08868;
+  --color-brick:  #7a3c2c;
+}
+
+/* ── shadcn-Token-Mapping ─────────────────────────────────── */
+@theme inline {
+  /* Projekt-Fonts */
+  --font-sans:    var(--font-sans);
+  --font-display: var(--font-display);
+
+  /* shadcn-Pflicht-Tokens */
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary:            var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-accent:             var(--accent);
+  --color-accent-foreground:  var(--accent-foreground);
+  --color-destructive:        var(--destructive);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+  --radius-sm:  calc(var(--radius) * 0.6);
+  --radius-md:  calc(var(--radius) * 0.8);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+/* ── shadcn Light-Theme (auf Projekt-Palette abgestimmt) ──── */
+:root {
+  --background:         #faf8f5;
+  --foreground:         #1b1e1e;
+  --card:               #ffffff;
+  --card-foreground:    #1b1e1e;
+  --popover:            #ffffff;
+  --popover-foreground: #1b1e1e;
+  --primary:            #1b1e1e;
+  --primary-foreground: #faf8f5;
+  --secondary:          #f0eeeb;
+  --secondary-foreground: #1b1e1e;
+  --muted:              #f0eeeb;
+  --muted-foreground:   #7a7774;
+  --accent:             #a08868;
+  --accent-foreground:  #ffffff;
+  --destructive:        oklch(0.577 0.245 27.325);
+  --border:             #e8e4de;
+  --input:              #e8e4de;
+  --ring:               #a08868;
+  --radius:             0.5rem;
+}
+
+/* ── Basis ────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-dark);
+  }
+}
+
+/* ── Typografie-Utilities ─────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
