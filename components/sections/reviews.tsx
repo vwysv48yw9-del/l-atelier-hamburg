@@ -5,16 +5,6 @@ import { SALON } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-// ─── TODO: Echte Google-Bewertungen eintragen ──────────────────────────────
-// Ersetze die Platzhalter-Reviews durch verifizierte Kundenstimmen.
-// Google-Score und Anzahl der Rezensionen ebenfalls aktualisieren.
-//
-// Format:
-// { name: "Vorname", location: "Ort", date: "vor X Monaten", stars: 5, text: "..." }
-//
-// KEINE erfundenen Bewertungen verwenden.
-// ─────────────────────────────────────────────────────────────────────────────
-
 const TODO_REVIEWS: Array<{
   name: string
   date: string
@@ -47,14 +37,14 @@ const TODO_REVIEWS: Array<{
   },
 ]
 
-const TODO_SCORE = SALON.google.score
-const TODO_COUNT = SALON.google.count
+const SCORE = SALON.google.score
+const COUNT = SALON.google.count
 
-function Stars({ count = 5 }: { count?: number }) {
+function Stars({ count = 5, size = 11 }: { count?: number; size?: number }) {
   return (
     <span className="flex gap-0.5">
       {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="11" height="11" viewBox="0 0 10 10" fill="#a08868" aria-hidden>
+        <svg key={i} width={size} height={size} viewBox="0 0 10 10" fill="#a08868" aria-hidden>
           <path d="M5 0l1.12 3.44H9.76L6.82 5.57l1.12 3.44L5 7.01l-2.94 2 1.12-3.44L.24 3.44H3.88L5 0z"/>
         </svg>
       ))}
@@ -62,122 +52,145 @@ function Stars({ count = 5 }: { count?: number }) {
   )
 }
 
+function ReviewCard({
+  review,
+  delay,
+  offsetY = 0,
+}: {
+  review: typeof TODO_REVIEWS[0]
+  delay: number
+  offsetY?: number
+}) {
+  return (
+    <motion.article
+      className="review-card flex flex-col p-7 rounded-2xl"
+      style={{
+        backgroundColor: "#ffffff",
+        border: "1px solid rgba(27,30,30,0.07)",
+        marginTop: offsetY,
+      }}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.7, ease: EASE, delay }}
+    >
+      <div className="flex items-center justify-between mb-5">
+        <Stars count={review.stars} size={10} />
+        <span className="text-[10.5px] uppercase tracking-[0.16em]" style={{ color: "#bbb" }}>
+          {review.date}
+        </span>
+      </div>
+
+      {review.text && (
+        <p
+          className="font-display font-light italic leading-relaxed mb-6 flex-1"
+          style={{ fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)", color: "#3a3734" }}
+        >
+          „{review.text}"
+        </p>
+      )}
+
+      <div className="flex items-center gap-3 pt-5" style={{ borderTop: "1px solid rgba(27,30,30,0.06)" }}>
+        <div
+          className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-semibold shrink-0"
+          style={{ backgroundColor: "#f0eeeb", color: "#6a6460" }}
+        >
+          {review.name.charAt(0)}
+        </div>
+        <div>
+          <div className="text-[12.5px] font-semibold" style={{ color: "#1c1f1f" }}>{review.name}</div>
+          <div className="text-[11px]" style={{ color: "#b0aaa4" }}>Google-Rezension</div>
+        </div>
+      </div>
+    </motion.article>
+  )
+}
+
 export function Reviews() {
-  // Wenn keine echten Bewertungen vorhanden: Platzhalter-Sektion anzeigen
   if (TODO_REVIEWS.length === 0) {
     return (
-      <section id="bewertungen" className="py-20 md:py-28" style={{ backgroundColor: "#faf8f5" }}>
-        <div className="max-w-6xl mx-auto px-5 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: EASE }}
-          >
-            <p className="text-[11px] tracking-[0.3em] uppercase mb-4 font-medium" style={{ color: "#a08868" }}>
-              Bewertungen
-            </p>
-            <h2
-              className="font-display font-light leading-tight mb-6"
-              style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", color: "#1b1e1e" }}
-            >
-              Das sagen Kunden.
-            </h2>
-            <div
-              className="rounded-xl px-6 py-8 border-2 border-dashed"
-              style={{ borderColor: "#d8d2c8", backgroundColor: "#f5f3f0" }}
-            >
-              <p className="text-[13px] font-mono" style={{ color: "#9B958B" }}>
-                TODO: Echte Google-Bewertungen eintragen.<br />
-                Daten aus Google Business Profile kopieren und in<br />
-                <code className="bg-white/60 px-1 rounded">components/sections/reviews.tsx</code> einfügen.
-              </p>
-              <div className="mt-5 flex items-center gap-3">
-                <Stars count={5} />
-                <span className="text-[13px]" style={{ color: "#aaa" }}>
-                  {TODO_SCORE} · {TODO_COUNT} · Google
-                </span>
-              </div>
-            </div>
-          </motion.div>
+      <section id="bewertungen" className="py-28 md:py-40" style={{ backgroundColor: "#faf8f5" }}>
+        <div className="max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
+          <p className="text-[10px] tracking-[0.38em] uppercase mb-5 font-medium" style={{ color: "#a08868" }}>
+            Bewertungen
+          </p>
+          <h2 className="font-display font-light mb-8" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", color: "#1c1f1f" }}>
+            Das sagen Kunden.
+          </h2>
         </div>
       </section>
     )
   }
 
-  return (
-    <section id="bewertungen" className="py-20 md:py-28" style={{ backgroundColor: "#faf8f5" }}>
-      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+  const left  = TODO_REVIEWS.filter((_, i) => i % 2 === 0)
+  const right = TODO_REVIEWS.filter((_, i) => i % 2 === 1)
 
-        <motion.div
-          className="flex flex-col md:flex-row md:items-end gap-6 mb-14"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
-          <div className="flex-1">
+  return (
+    <section id="bewertungen" className="py-28 md:py-40" style={{ backgroundColor: "#faf8f5" }}>
+      <div className="max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16 mb-16 md:mb-20">
+
+          {/* Score */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: EASE }}
+          >
             <div
-              className="font-display font-light italic leading-none mb-3"
-              style={{ fontSize: "clamp(3.5rem, 7vw, 5.5rem)", color: "#ddd8d0" }}
+              className="font-display font-light leading-none mb-2"
+              style={{ fontSize: "clamp(4.5rem, 10vw, 7rem)", color: "#e8e2d8", letterSpacing: "-0.02em" }}
             >
-              {TODO_SCORE}
+              {SCORE}
             </div>
+            <Stars count={5} size={13} />
+          </motion.div>
+
+          {/* Text + Meta */}
+          <motion.div
+            className="pb-1"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+          >
             <h2
-              className="font-display font-light leading-tight"
-              style={{ fontSize: "clamp(1.4rem, 2.8vw, 2.2rem)", color: "#1b1e1e" }}
+              className="font-display font-light leading-tight mb-3"
+              style={{ fontSize: "clamp(1.5rem, 2.8vw, 2.3rem)", color: "#1c1f1f" }}
             >
               Das sagen Kunden.
             </h2>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <Stars count={5} />
-            <span className="text-[13px]" style={{ color: "#888" }}>{TODO_COUNT} · Google</span>
-          </div>
-        </motion.div>
+            <p className="text-[12.5px]" style={{ color: "#a0998f" }}>
+              {COUNT} verifizierte Bewertungen · Google
+            </p>
+          </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+        {/* Masonry-ähnliches 2-Spalten-Layout */}
+        <div className="hidden md:grid grid-cols-2 gap-5 items-start">
+          {/* Linke Spalte */}
+          <div className="flex flex-col gap-5">
+            {left.map((r, i) => (
+              <ReviewCard key={r.name} review={r} delay={i * 0.08} />
+            ))}
+          </div>
+          {/* Rechte Spalte – leicht nach unten versetzt */}
+          <div className="flex flex-col gap-5" style={{ paddingTop: "2.5rem" }}>
+            {right.map((r, i) => (
+              <ReviewCard key={r.name} review={r} delay={0.1 + i * 0.08} />
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile: 1 Spalte */}
+        <div className="flex flex-col gap-4 md:hidden">
           {TODO_REVIEWS.map((r, i) => (
-            <motion.div
-              key={r.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.65, ease: EASE, delay: i * 0.07 }}
-              className={[
-                "py-9",
-                i % 2 === 1 ? "md:pl-12" : "md:pr-12",
-                i < TODO_REVIEWS.length - 1 ? "border-b border-[#e0dbd3]" : "",
-                i % 2 === 0 ? "md:border-r md:border-[#e0dbd3]" : "",
-              ].join(" ")}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <Stars count={r.stars} />
-                <span className="text-[11px] uppercase tracking-wide" style={{ color: "#aaa" }}>{r.date}</span>
-              </div>
-              {r.text && (
-                <p
-                  className="font-display font-light italic leading-relaxed mb-6"
-                  style={{ fontSize: "clamp(1rem, 1.7vw, 1.15rem)", color: "#3a3734" }}
-                >
-                  „{r.text}"
-                </p>
-              )}
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold shrink-0"
-                  style={{ backgroundColor: "#e0dbd3", color: "#5a5754" }}
-                >
-                  {r.name.charAt(0)}
-                </div>
-                <div>
-                  <div className="text-[13px] font-semibold" style={{ color: "#1b1e1e" }}>{r.name}</div>
-                  <div className="text-[12px]" style={{ color: "#999" }}>Google-Rezension</div>
-                </div>
-              </div>
-            </motion.div>
+            <ReviewCard key={r.name} review={r} delay={i * 0.07} />
           ))}
         </div>
+
       </div>
     </section>
   )
