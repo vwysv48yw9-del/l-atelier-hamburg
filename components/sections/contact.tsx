@@ -25,7 +25,7 @@ const inputBase: React.CSSProperties = {
 
 export function Contact() {
   return (
-    <section id="kontakt" className="relative py-28 md:py-40" style={{ backgroundColor: "#1c1f1f" }}>
+    <section id="kontakt" className="relative py-32 md:py-48" style={{ backgroundColor: "#1c1f1f" }}>
 
       {/* Scrim oben – Übergang von Reviews (hell) */}
       <div
@@ -57,7 +57,7 @@ export function Contact() {
             <motion.h2
               variants={fadeUp(0.05)}
               className="font-display font-light italic mb-6 leading-tight"
-              style={{ fontSize: "clamp(2rem, 4vw, 3.1rem)", color: "#F5F3EE" }}
+              style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", color: "#F5F3EE", letterSpacing: "-0.02em" }}
             >
               Komm vorbei.
             </motion.h2>

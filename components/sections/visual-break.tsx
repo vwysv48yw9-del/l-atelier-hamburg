@@ -72,14 +72,14 @@ export function VisualBreak() {
         </motion.p>
 
         <motion.blockquote
-          className="font-display font-light italic leading-[1.18]"
+          className="font-display font-light italic leading-[1.14]"
           style={{
-            fontSize: "clamp(1.9rem, 4vw, 3.4rem)",
+            fontSize: "clamp(2.4rem, 5.5vw, 4.8rem)",
             color: "rgba(247,244,239,0.93)",
-            maxWidth: "20ch",
-            letterSpacing: "-0.02em",
+            maxWidth: "18ch",
+            letterSpacing: "-0.025em",
           }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.05, ease: EASE, delay: 0.12 }}

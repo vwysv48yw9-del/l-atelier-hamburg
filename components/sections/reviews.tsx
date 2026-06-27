@@ -153,7 +153,7 @@ export function Reviews() {
           >
             <div
               className="font-display font-light leading-none mb-3"
-              style={{ fontSize: "clamp(5rem, 11vw, 8rem)", color: "#e8e2d8", letterSpacing: "-0.03em" }}
+              style={{ fontSize: "clamp(6rem, 14vw, 11rem)", color: "#e8e2d8", letterSpacing: "-0.04em" }}
             >
               {SCORE}
             </div>
