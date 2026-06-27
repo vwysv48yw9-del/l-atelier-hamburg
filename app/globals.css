@@ -93,7 +93,6 @@
 .animate-kenburns {
   animation: kenburns 22s ease-out forwards;
   transform-origin: center center;
-  will-change: transform;
 }
 
 /* ── Nav underline hover ────────────────────────────────────── */
@@ -111,8 +110,13 @@
   background: #a08868;
   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link-active::after {
   width: 100%;
+}
+
+.nav-link:hover {
+  color: rgba(255,255,255,0.88) !important;
 }
 
 /* ── Service row hover ──────────────────────────────────────── */
@@ -125,15 +129,49 @@
 
 /* ── Review card hover ──────────────────────────────────────── */
 .review-card {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.35s ease;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .review-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(27,30,30,0.09), 0 2px 8px rgba(27,30,30,0.05);
 }
 
-/* ── Button hover ring ──────────────────────────────────────── */
+/* ── Button shadows ─────────────────────────────────────────── */
+.btn-primary {
+  transition: box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              background-color 0.3s ease;
+}
 .btn-primary:hover {
-  border-color: rgba(160, 136, 104, 0.5);
-  box-shadow: 0 0 0 1px rgba(160, 136, 104, 0.15);
+  border-color: rgba(160, 136, 104, 0.45);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 0 1px rgba(160,136,104,0.12);
+}
+
+.btn-ghost {
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.35s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(160, 136, 104, 0.35);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ── Image hover zoom ───────────────────────────────────────── */
+.img-zoom-wrap {
+  overflow: hidden;
+}
+.img-zoom-wrap img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-zoom-wrap:hover img {
+  transform: scale(1.04);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns { animation: none; }
+  .review-card       { transition: none; }
+  .btn-primary,
+  .btn-ghost         { transition: color 0.01ms, border-color 0.01ms; }
 }

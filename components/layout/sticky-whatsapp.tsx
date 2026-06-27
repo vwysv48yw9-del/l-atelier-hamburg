@@ -30,16 +30,19 @@ export function StickyWhatsApp() {
           className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
         >
           <div className="m-3">
-            <a
+            <motion.a
               href={WA_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full h-14 rounded-2xl text-white text-[13px] font-semibold tracking-[0.06em] shadow-xl"
-              style={{ backgroundColor: "#1b1e1e", border: "1px solid rgba(255,255,255,0.12)" }}
+              style={{ backgroundColor: "#1b1e1e", border: "1px solid rgba(160,136,104,0.18)" }}
+              whileHover={{ scale: 1.015 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
             >
               <WhatsAppIcon />
               Termin per WhatsApp
-            </a>
+            </motion.a>
           </div>
         </motion.div>
       )}

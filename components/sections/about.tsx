@@ -1,37 +1,42 @@
 "use client"
 
+import { useRef } from "react"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
-import { motion } from "motion/react"
+import { motion, useScroll, useTransform } from "motion/react"
 import { SALON, WA_URL } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
 const fadeUp = (delay = 0) => ({
   hidden:  { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE, delay } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE, delay } },
 })
 
 export function About() {
-  return (
-    <section id="salon" className="grid grid-cols-1 lg:grid-cols-2">
+  const sectionRef = useRef<HTMLElement>(null)
 
-      {/* Außenfoto links */}
+  // Parallax – Bild bewegt sich langsam nach oben beim Scrollen
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  })
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-7%", "7%"])
+
+  return (
+    <section ref={sectionRef} id="salon" className="grid grid-cols-1 lg:grid-cols-2">
+
+      {/* Außenfoto links – mit Parallax */}
       <motion.div
-        className="relative overflow-hidden"
+        className="img-zoom-wrap relative overflow-hidden"
         style={{ minHeight: "clamp(400px, 58vw, 740px)" }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.1, ease: EASE }}
       >
-        <motion.div
-          className="absolute inset-0"
-          initial={{ scale: 1.04 }}
-          whileInView={{ scale: 1.0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.4, ease: EASE }}
-        >
+        {/* Parallax-Container – scale:1.12 gibt Spielraum für Parallax + Hover-Zoom */}
+        <motion.div className="absolute inset-0" style={{ y: imageY, scale: 1.12 }}>
           <Image
             src="/images/aussen.png"
             alt="L'Atelier Hamburg – Außenansicht Reinskamp 2A"
@@ -42,6 +47,24 @@ export function About() {
             style={{ objectPosition: "20% 22%" }}
           />
         </motion.div>
+
+        {/* Vignette oben – Übergang von Services (dunkel) */}
+        <div
+          className="absolute inset-x-0 top-0 z-10 pointer-events-none"
+          style={{
+            height: "110px",
+            background: "linear-gradient(to bottom, rgba(16,18,18,0.55) 0%, transparent 100%)",
+          }}
+        />
+
+        {/* Vignette unten – Übergang zu Craft (dunkel) */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-10 pointer-events-none"
+          style={{
+            height: "90px",
+            background: "linear-gradient(to top, rgba(16,18,18,0.4) 0%, transparent 100%)",
+          }}
+        />
       </motion.div>
 
       {/* Text rechts */}
@@ -64,7 +87,11 @@ export function About() {
         <motion.h2
           variants={fadeUp(0.05)}
           className="font-display font-light leading-tight mb-9"
-          style={{ fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)", color: "#1c1f1f" }}
+          style={{
+            fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)",
+            color: "#1c1f1f",
+            letterSpacing: "-0.015em",
+          }}
         >
           Ein moderner Salon<br />
           in Hamburg-Billstedt.
@@ -89,28 +116,41 @@ export function About() {
           style={{ borderTop: "1px solid rgba(27,30,30,0.1)" }}
         >
           {[
-            { val: "9+",  label: "Jahre Erfahrung" },
-            { val: "1:1", label: "Persönlich" },
-            { val: SALON.google.score, label: "Google Score" },
+            { val: "9+",              label: "Jahre Erfahrung" },
+            { val: "1:1",             label: "Persönlich"      },
+            { val: SALON.google.score, label: "Google Score"   },
           ].map((s) => (
             <div key={s.label}>
-              <div className="font-display font-light text-[1.6rem] mb-1" style={{ color: "#1c1f1f" }}>{s.val}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "#aaa" }}>{s.label}</div>
+              <div
+                className="font-display font-light mb-1.5"
+                style={{ fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", color: "#1c1f1f", letterSpacing: "-0.02em" }}
+              >
+                {s.val}
+              </div>
+              <div className="text-[9.5px] uppercase tracking-[0.2em]" style={{ color: "#c0b8b0" }}>
+                {s.label}
+              </div>
             </div>
           ))}
         </motion.div>
 
         <motion.div variants={fadeUp(0.2)}>
-          <a
+          <motion.a
             href={WA_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase font-semibold border-b pb-1.5 transition-colors duration-300 hover:text-[#a08868]"
             style={{ color: "#1c1f1f", borderColor: "rgba(27,30,30,0.15)" }}
+            whileHover={{ x: 3 }}
+            transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
           >
             Termin vereinbaren
-            <ArrowRight size={11} strokeWidth={1.5} className="transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
+            <ArrowRight
+              size={11}
+              strokeWidth={1.5}
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </motion.a>
         </motion.div>
       </motion.div>
     </section>

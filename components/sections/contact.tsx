@@ -25,8 +25,17 @@ const inputBase: React.CSSProperties = {
 
 export function Contact() {
   return (
-    <section id="kontakt" className="py-28 md:py-40" style={{ backgroundColor: "#1c1f1f" }}>
-      <div className="max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
+    <section id="kontakt" className="relative py-28 md:py-40" style={{ backgroundColor: "#1c1f1f" }}>
+
+      {/* Scrim oben – Übergang von Reviews (hell) */}
+      <div
+        className="absolute inset-x-0 top-0 pointer-events-none z-10"
+        style={{
+          height: "100px",
+          background: "linear-gradient(to bottom, rgba(250,248,245,0.07) 0%, transparent 100%)",
+        }}
+      />
+      <div className="relative z-20 max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
 
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24"
@@ -63,11 +72,11 @@ export function Contact() {
             </motion.p>
 
             <motion.div variants={fadeUp(0.15)} className="mb-4">
-              <a
+              <motion.a
                 href={WA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-3 text-white text-[13px] tracking-[0.06em] font-semibold rounded-full transition-all duration-300 hover:opacity-90 w-full sm:w-auto justify-center sm:justify-start"
+                className="btn-primary inline-flex items-center gap-3 text-white text-[13px] tracking-[0.06em] font-semibold rounded-full w-full sm:w-auto justify-center sm:justify-start"
                 style={{
                   backgroundColor: "#1e2120",
                   border: "1px solid rgba(160,136,104,0.22)",
@@ -75,10 +84,13 @@ export function Contact() {
                   paddingLeft: "28px",
                   paddingRight: "32px",
                 }}
+                whileHover={{ scale: 1.015, y: -1 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
               >
                 <WhatsAppIcon />
                 Jetzt auf WhatsApp schreiben
-              </a>
+              </motion.a>
             </motion.div>
 
             <motion.p
@@ -165,11 +177,8 @@ export function Contact() {
 
           {/* Rechts: Formular */}
           <motion.div variants={fadeUp(0.1)} className="flex flex-col justify-center">
-            <p className="text-[10px] tracking-[0.32em] uppercase mb-3 font-medium" style={{ color: "#565250" }}>
+            <p className="text-[10px] tracking-[0.38em] uppercase mb-8 font-medium" style={{ color: "#a08868" }}>
               Oder kurze Nachricht
-            </p>
-            <p className="text-[13px] mb-9" style={{ color: "#3a3836" }}>
-              Alternativ zum WhatsApp-Chat.
             </p>
 
             <form className="flex flex-col gap-5">
@@ -202,15 +211,26 @@ export function Contact() {
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
-                className="w-full h-12 rounded-xl text-white text-[11px] tracking-[0.22em] uppercase font-semibold mt-1 transition-all duration-300 hover:opacity-85"
-                style={{ backgroundColor: "#a08868" }}
+                className="w-full h-[52px] rounded-xl text-[10.5px] tracking-[0.24em] uppercase font-semibold mt-2"
+                style={{
+                  backgroundColor: "rgba(160,136,104,0.14)",
+                  border: "1px solid rgba(160,136,104,0.35)",
+                  color: "#c4a882",
+                }}
+                whileHover={{
+                  backgroundColor: "rgba(160,136,104,0.22)",
+                  borderColor: "rgba(160,136,104,0.6)",
+                  color: "#dcc9a8",
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "tween", duration: 0.22, ease: "easeOut" }}
               >
                 Absenden
-              </button>
+              </motion.button>
 
-              <p className="text-[11.5px] text-center" style={{ color: "#3a3836" }}>
+              <p className="text-[11px] text-center" style={{ color: "#464240" }}>
                 Antwort innerhalb eines Werktages.
               </p>
             </form>

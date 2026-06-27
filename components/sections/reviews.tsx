@@ -33,7 +33,7 @@ const TODO_REVIEWS: Array<{
     name:  "Florian Kaßner",
     date:  "vor einem Monat",
     stars: 5,
-    text:  "",
+    text:  "Sehr angenehme Atmosphäre und ein wirklich gutes Ergebnis. Man merkt, dass hier mit Sorgfalt gearbeitet wird. Komme auf jeden Fall wieder.",
   },
 ]
 
@@ -63,10 +63,11 @@ function ReviewCard({
 }) {
   return (
     <motion.article
-      className="review-card flex flex-col p-7 rounded-2xl"
+      className="review-card flex flex-col p-8 rounded-2xl"
       style={{
         backgroundColor: "#ffffff",
-        border: "1px solid rgba(27,30,30,0.07)",
+        border: "1px solid rgba(27,30,30,0.06)",
+        boxShadow: "0 2px 16px rgba(27,30,30,0.05), 0 1px 3px rgba(27,30,30,0.04)",
         marginTop: offsetY,
       }}
       initial={{ opacity: 0, y: 28 }}
@@ -126,43 +127,60 @@ export function Reviews() {
   const right = TODO_REVIEWS.filter((_, i) => i % 2 === 1)
 
   return (
-    <section id="bewertungen" className="py-28 md:py-40" style={{ backgroundColor: "#faf8f5" }}>
-      <div className="max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
+    <section id="bewertungen" className="relative py-28 md:py-40" style={{ backgroundColor: "#faf8f5" }}>
+
+      {/* Scrim oben – Schatten von Craft (dunkel) */}
+      <div
+        className="absolute inset-x-0 top-0 pointer-events-none z-10"
+        style={{
+          height: "100px",
+          background: "linear-gradient(to bottom, rgba(6,5,4,0.07) 0%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative z-20 max-w-6xl mx-auto px-8 sm:px-12 md:px-20">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16 mb-16 md:mb-20">
+        <div className="flex flex-col md:flex-row md:items-end gap-10 md:gap-20 mb-16 md:mb-24">
 
           {/* Score */}
           <motion.div
+            className="shrink-0"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.85, ease: EASE }}
           >
             <div
-              className="font-display font-light leading-none mb-2"
-              style={{ fontSize: "clamp(4.5rem, 10vw, 7rem)", color: "#e8e2d8", letterSpacing: "-0.02em" }}
+              className="font-display font-light leading-none mb-3"
+              style={{ fontSize: "clamp(5rem, 11vw, 8rem)", color: "#e8e2d8", letterSpacing: "-0.03em" }}
             >
               {SCORE}
             </div>
-            <Stars count={5} size={13} />
+            <Stars count={5} size={14} />
           </motion.div>
 
           {/* Text + Meta */}
           <motion.div
-            className="pb-1"
+            className="pb-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.12 }}
           >
-            <h2
-              className="font-display font-light leading-tight mb-3"
-              style={{ fontSize: "clamp(1.5rem, 2.8vw, 2.3rem)", color: "#1c1f1f" }}
+            <p
+              className="text-[10px] tracking-[0.38em] uppercase mb-5 font-medium"
+              style={{ color: "#a08868" }}
             >
-              Das sagen Kunden.
+              Kundenstimmen
+            </p>
+            <h2
+              className="font-display font-light leading-tight mb-4"
+              style={{ fontSize: "clamp(1.8rem, 3.2vw, 2.8rem)", color: "#1c1f1f", letterSpacing: "-0.015em" }}
+            >
+              Was unsere Kunden<br className="hidden sm:block" /> sagen.
             </h2>
-            <p className="text-[12.5px]" style={{ color: "#a0998f" }}>
+            <p className="text-[12.5px]" style={{ color: "#b0a89e" }}>
               {COUNT} verifizierte Bewertungen · Google
             </p>
           </motion.div>
@@ -195,3 +213,4 @@ export function Reviews() {
     </section>
   )
 }
+

@@ -34,19 +34,18 @@ export function Hero() {
   return (
     <section ref={sectionRef} className="relative w-full min-h-[100svh] overflow-hidden">
 
-      {/* Foto – Ken Burns + Parallax */}
-      <motion.div className="absolute inset-0 overflow-hidden" style={{ y: imgY }}>
-        <div className="absolute inset-0 animate-kenburns">
-          <Image
-            src="/images/innen.png"
-            alt="L'Atelier Hamburg – Innenansicht des Salons"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-            style={{ objectPosition: "55% 30%" }}
-          />
-        </div>
+      {/* Foto – Parallax (eigene Layer, kein will-change) */}
+      <motion.div className="absolute inset-0" style={{ y: imgY }}>
+        <Image
+          src="/images/innen.png"
+          alt="L'Atelier Hamburg – Innenansicht des Salons"
+          fill
+          priority
+          quality={100}
+          sizes="100vw"
+          className="object-cover animate-kenburns"
+          style={{ objectPosition: "55% 30%" }}
+        />
       </motion.div>
 
       {/* Leichtes globales Dimmen */}
@@ -113,13 +112,13 @@ export function Hero() {
 
           {/* Headline */}
           <motion.h1
-            className="font-light mb-10"
+            className="font-light mb-11"
             style={{
               color: "#F7F4EF",
-              fontSize: "clamp(1.75rem, 4.2vw, 2.9rem)",
-              lineHeight: 1.38,
-              letterSpacing: "-0.015em",
-              maxWidth: "15ch",
+              fontSize: "clamp(2.6rem, 5.2vw, 4.4rem)",
+              lineHeight: 1.16,
+              letterSpacing: "-0.022em",
+              maxWidth: "14ch",
             }}
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -137,32 +136,37 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.42, duration: 0.9, ease: EASE }}
           >
-            <a
+            <motion.a
               href={WA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center justify-center gap-2.5 text-white text-[11.5px] tracking-[0.12em] uppercase font-semibold rounded-full transition-all duration-300 hover:opacity-95 active:scale-[0.98] w-full sm:w-auto"
+              className="btn-primary inline-flex items-center justify-center gap-2.5 text-white text-[11.5px] tracking-[0.12em] uppercase font-semibold rounded-full w-full sm:w-auto"
               style={{
                 backgroundColor: "rgba(18, 16, 14, 0.88)",
                 border: "1px solid rgba(160,136,104,0.3)",
-                height: "50px",
-                paddingLeft: "28px",
-                paddingRight: "32px",
+                height: "54px",
+                paddingLeft: "30px",
+                paddingRight: "34px",
                 backdropFilter: "blur(8px)",
               }}
+              whileHover={{ scale: 1.015, y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
             >
               <WhatsAppIcon />
               Termin per WhatsApp
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
               href={SALON.phoneHref}
               className="inline-flex items-center gap-2 text-[11.5px] tracking-[0.06em] transition-colors duration-300 hover:text-white min-h-[44px]"
               style={{ color: "#7a7570" }}
+              whileHover={{ x: 2 }}
+              transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
             >
               <Phone size={11} strokeWidth={1.5} />
               {SALON.phone}
-            </a>
+            </motion.a>
           </motion.div>
 
         </div>
