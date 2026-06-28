@@ -133,7 +133,7 @@ export function Reviews() {
                   letterSpacing: "0.08em",
                 }}
               >
-                {SALON.google.count} Bewertungen
+                {SALON.google.count}
               </span>
             </div>
           </div>

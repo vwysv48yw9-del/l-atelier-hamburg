@@ -281,7 +281,7 @@ export function TikTokCta() {
 
           {/* Hint — verschwindet nach erstem Wischen */}
           <motion.p
-            className="mt-6 text-center"
+            className="mt-6 text-center md:hidden"
             style={{
               fontSize:      "13px",
               letterSpacing: "0.14em",
