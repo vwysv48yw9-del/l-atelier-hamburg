@@ -262,7 +262,7 @@ export function TikTokCta() {
                   // Mobile:  85vw (peek des nächsten sichtbar)
                   // md:      calc(50% - 8px) → 2 sichtbar
                   // lg:      calc(33.333% - 11px) → 3 sichtbar
-                  className="min-w-[85vw] md:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)]"
+                  className="min-w-[72vw] md:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)]"
                 >
                   <VideoCard index={i} />
                 </div>
@@ -271,7 +271,7 @@ export function TikTokCta() {
           </div>
 
           {/* Hint */}
-          <p className="mt-5 text-center" style={{ fontSize: "10px", color: "rgba(255,255,255,0.10)", letterSpacing: "0.05em" }}>
+          <p className="mt-5 text-center" style={{ fontSize: "12px", color: "rgba(255,255,255,0.32)", letterSpacing: "0.12em" }}>
             ← Scrollen →
           </p>
 

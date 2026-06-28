@@ -4,7 +4,6 @@ import { Hero }          from "@/components/sections/hero"
 import { Services }      from "@/components/sections/services"
 import { About }         from "@/components/sections/about"
 import { Reviews }       from "@/components/sections/reviews"
-import { Contact }       from "@/components/sections/contact"
 import { TikTokCta }     from "@/components/sections/tiktok-cta"
 import { StickyWhatsApp } from "@/components/layout/sticky-whatsapp"
 
@@ -27,7 +26,6 @@ export default function Home() {
           }}
         />
 
-        <Contact />
         <TikTokCta />
       </main>
       <Footer />

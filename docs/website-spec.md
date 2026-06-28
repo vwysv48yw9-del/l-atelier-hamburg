@@ -29,7 +29,6 @@ Die Startseite (`/`) setzt sich aus diesen Elementen in dieser Reihenfolge zusam
 [About]                — Salon-Vorstellung, Foto, Stats
 [Reviews]              — Google-Bewertungen
 [Transition-Gradient]  — visueller Übergang hell→dunkel (kein Text, nur Gestaltung)
-[Contact]              — Kontakt-CTA + Kartenbereich
 [TikTokCta]            — Social-Media-Einblick (Platzhalter bis Go-live)
 [Footer]               — Adresse, Öffnungszeiten, Links
 [StickyWhatsApp]       — Fixierter CTA-Button (nur Mobile, erscheint nach 400px Scroll)
@@ -284,50 +283,6 @@ Jedes Testimonial: Blockquote (display italic) + 5 Sterne + Name uppercase + `·
 
 ---
 
-## Contact
-
-**Komponente:** `components/sections/contact.tsx`
-**ID:** `#kontakt`
-**Hintergrund:** `#1c1f1f`
-**Layout:** 2-spaltig (lg, `360px + 1fr`), 1-spaltig (mobile)
-
-### Linke Spalte
-
-**Eyebrow:** `KONTAKT`
-
-**Headline (h2, italic):** *Komm vorbei.*
-- `clamp(2.6rem, 5vw, 4rem)`, `font-display`
-
-**Subtext:**
-> Schreib uns auf WhatsApp — wir finden gemeinsam den passenden Termin.
-
-**Primär-CTA:** *Jetzt auf WhatsApp schreiben* + WhatsApp-Icon
-- → `WA_URL`, neuer Tab
-- Pill, 56px hoch, glassmorphism (accent-toned)
-
-### Rechte Spalte — Karte
-
-**Bild:** `/images/location-apple-final.png` (Apple-Maps-Screenshot)
-- Filter: `saturate(0.82) brightness(0.86) contrast(1.07)`
-- `object-position: 52% 44%`
-- Vignetten: radial (innen hell, außen dunkel), links heller, unten dunkler
-
-**Gold-Pin:** SVG, positioniert bei `left: 40.70%`, `top: 41.50%`
-- 2 pulsierende Ringe (`map-pulse-ring`, 4s, `rgba(160,136,104,*)`)
-
-**Glass-Card** (overlay, rechts auf Desktop / darunter auf Mobile):
-
-| Element | Inhalt |
-|---|---|
-| Eyebrow | `STANDORT` |
-| Tagline | *Mitten in Billstedt.* (italic, display) |
-| Trennlinie | |
-| Adresse | Reinskamp 2A · 22117 Hamburg |
-| Nahverkehr | 5 Min. · U-Bahn Billstedt |
-| CTA | *Navigation starten* ↗ → `SALON.mapsUrl` (Google Maps Directions) |
-
----
-
 ## TikTokCta
 
 **Komponente:** `components/sections/tiktok-cta.tsx`
@@ -366,11 +321,11 @@ Jede Karte:
 - Links: alle → `SALON.tiktok` (TikTok-Profil, nicht einzelne Videos)
 
 **Breakpoints:**
-- Mobile: `min-width: 85vw` (1 Karte + Peek)
+- Mobile: `min-width: 72vw` — Peek-Effekt: nächste Karte ca. 30px sichtbar
 - Tablet (`md:`): `calc(50% - 8px)` (2 Karten)
 - Desktop (`lg:`): `calc(33.333% - 11px)` (3 Karten)
 
-**Hint:** `← Scrollen →` (sehr dezent, 10%, unter dem Slider)
+**Hint:** `← Scrollen →` — `12px`, `rgba(255,255,255,0.32)`, sichtbar aber dezent
 
 ---
 
