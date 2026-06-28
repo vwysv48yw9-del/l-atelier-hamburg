@@ -2,10 +2,8 @@ import { Header }        from "@/components/layout/header"
 import { Footer }        from "@/components/layout/footer"
 import { Hero }          from "@/components/sections/hero"
 import { Services }      from "@/components/sections/services"
-import { VisualBreak }   from "@/components/sections/visual-break"
 import { About }         from "@/components/sections/about"
 import { Reviews }       from "@/components/sections/reviews"
-import { Location }      from "@/components/sections/location"
 import { Contact }       from "@/components/sections/contact"
 import { StickyWhatsApp } from "@/components/layout/sticky-whatsapp"
 
@@ -16,10 +14,18 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <Services />
-        <VisualBreak />
         <About />
         <Reviews />
-        <Location />
+
+        {/* Übergang: hell (#faf8f5) → dunkel (#1c1f1f) */}
+        <div
+          aria-hidden="true"
+          style={{
+            height: "100px",
+            background: "linear-gradient(to bottom, #faf8f5 0%, #1c1f1f 100%)",
+          }}
+        />
+
         <Contact />
       </main>
       <Footer />

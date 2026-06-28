@@ -18,7 +18,7 @@ const SERVICES = [
     items: [
       { name: "Skin / Low / Mid Fade", desc: "Präziser Übergang, sauber ausgearbeitet", price: "28" },
       { name: "Shape Up",              desc: "Konturenpflege & Lineup",                price: "18" },
-      { name: "Schnitt + Fade",        desc: "Alles in einem Termin",                  price: "38" },
+      { name: "Schnitt + Fade",        desc: "Schnitt · Fade · komplett in einem",      price: "38" },
     ],
   },
   {
@@ -62,8 +62,8 @@ export function Services() {
               letterSpacing: "-0.018em",
             }}
           >
-            Klare Preise.{" "}
-            <span style={{ color: "rgba(255,255,255,0.11)" }}>Keine Überraschungen.</span>
+            Dein Stil.{" "}
+            <span style={{ color: "rgba(255,255,255,0.18)" }}>Unser Handwerk.</span>
           </h2>
         </motion.div>
 
@@ -120,19 +120,19 @@ export function Services() {
                       <div
                         className="font-light transition-colors duration-500 group-hover/item:text-white"
                         style={{
-                          fontSize: "clamp(1.1rem, 1.85vw, 1.35rem)",
-                          color: "#C8C2B6",
-                          letterSpacing: "-0.012em",
+                          fontSize: "clamp(1.25rem, 2vw, 1.55rem)",
+                          color: "#E8E2D8",
+                          letterSpacing: "-0.014em",
                         }}
                       >
                         {item.name}
                       </div>
                       <div
-                        className="mt-2"
+                        className="mt-2.5"
                         style={{
-                          fontSize: "10px",
-                          color: "#383432",
-                          letterSpacing: "0.17em",
+                          fontSize: "12px",
+                          color: "rgba(160,136,104,0.68)",
+                          letterSpacing: "0.12em",
                         }}
                       >
                         {item.desc}

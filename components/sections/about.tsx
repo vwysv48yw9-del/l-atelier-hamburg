@@ -98,14 +98,14 @@ export function About() {
 
         <motion.div variants={fadeUp(0.1)} className="flex flex-col gap-4 mb-12">
           <p className="text-[14.5px] leading-relaxed font-medium" style={{ color: "#282520" }}>
-            Klare Linien. Saubere Arbeit. Entspannte Atmosphäre.
+            Persönliche Beratung. Moderne Atmosphäre. Liebe zum Detail.
           </p>
           <p className="text-[14.5px] leading-relaxed" style={{ color: "#4a4744" }}>
-            Kein Luxus-Tempel. Kein Schnellschneiden.
+            Inhabergeführt und mit echtem Handwerk — du weißt, wer deine Haare schneidet,
+            und du merkst es am Ergebnis.
           </p>
           <p className="text-[14.5px] leading-relaxed" style={{ color: "#4a4744" }}>
-            Inhabergeführt und persönlich — du weißt, wer deine Haare schneidet.
-            Einfach gute Haarschnitte, jedes Mal.
+            Kein Stress, keine Hektik. Nur ehrliche Arbeit, jedes Mal.
           </p>
         </motion.div>
 
