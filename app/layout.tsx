@@ -27,11 +27,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "L'Atelier Hamburg Billstedt | Herrenfriseur & Fades",
+  title: "L'Atelier Hamburg",
   description:
     "Moderne Herrenschnitte, Fades und Bartpflege in Hamburg-Billstedt. Termine bequem per WhatsApp vereinbaren.",
   openGraph: {
-    title: "L'Atelier Hamburg Billstedt | Herrenfriseur & Fades",
+    title: "L'Atelier Hamburg",
     description:
       "Moderne Herrenschnitte, Fades und Bartpflege in Hamburg-Billstedt. Termine bequem per WhatsApp vereinbaren.",
     locale: "de_DE",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "L'Atelier Hamburg Billstedt | Herrenfriseur & Fades",
+    title: "L'Atelier Hamburg",
     description:
       "Moderne Herrenschnitte, Fades und Bartpflege in Hamburg-Billstedt. Termine bequem per WhatsApp vereinbaren.",
     images: ["/images/innen.png"],
