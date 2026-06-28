@@ -7,44 +7,44 @@ const EASE = [0.16, 1, 0.3, 1] as const
 const SERVICES = [
   {
     name:  "Herrenschnitt",
-    desc:  "Persönliche Beratung · Präziser Schnitt · Styling",
+    desc:  "Wir reden zuerst. Dann schneiden wir.",
     price: "32",
   },
   {
     name:  "Kinderschnitt",
-    desc:  "Entspannte Atmosphäre · Sorgfalt von Anfang an",
+    desc:  "Ruhig bleiben. Gut aussehen. Für die Kleinen.",
     price: "22",
     gap:   true,
   },
   {
     name:  "Skin / Low / Mid Fade",
-    desc:  "Nahtlose Übergänge mit höchster Präzision",
+    desc:  "Den Übergang, den man erst beim zweiten Hinsehen bemerkt.",
     price: "28",
   },
   {
     name:  "Shape Up",
-    desc:  "Klare Konturen. Sofort sichtbarer Unterschied.",
+    desc:  "Wenn der Rahmen stimmt, stimmt alles.",
     price: "18",
   },
   {
     name:  "Schnitt + Fade",
-    desc:  "Klassische Form, moderner Verlauf — aus einem Guss",
+    desc:  "Klassische Länge oben. Moderne Kante unten.",
     price: "38",
     gap:   true,
   },
   {
     name:  "Bartpflege",
-    desc:  "Perfekt geformt und sauber ausgearbeitet",
+    desc:  "Ein Bart, der Charakter hat — nicht nur Wuchs.",
     price: "18",
   },
   {
     name:  "Rasur",
-    desc:  "Heiße Kompresse · Präzise Klinge · Gepflegtes Finish",
+    desc:  "Heiße Kompresse. Offene Klinge. Das Original.",
     price: "22",
   },
   {
     name:  "Schnitt + Bart",
-    desc:  "Frisur und Bartkonturen in perfekter Harmonie",
+    desc:  "Wenn Haar und Bart zur selben Person gehören.",
     price: "44",
   },
 ]
@@ -166,41 +166,24 @@ export function Services() {
     >
       <div className="max-w-5xl mx-auto px-8 sm:px-12 md:px-20">
 
-        {/* ── Header ── */}
+        {/* ── Eyebrow ── */}
         <motion.div
-          className="mb-16 md:mb-24"
-          initial={{ opacity: 0, y: 24 }}
+          className="flex items-center gap-5 mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.9, ease: EASE }}
         >
-          {/* Eyebrow + Linie */}
-          <div className="flex items-center gap-5 mb-9">
-            <p
-              className="shrink-0 text-[10px] tracking-[0.44em] uppercase font-medium"
-              style={{ color: "#a08868" }}
-            >
-              Leistungen & Preise
-            </p>
-            <div
-              className="flex-1"
-              style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }}
-            />
-          </div>
-
-          {/* Headline */}
-          <h2
-            className="font-display font-light leading-[1.06]"
-            style={{
-              fontSize:      "clamp(3rem, 6vw, 5rem)",
-              color:         "#F5F3EE",
-              letterSpacing: "-0.028em",
-            }}
+          <p
+            className="shrink-0 text-[10px] tracking-[0.44em] uppercase font-medium"
+            style={{ color: "#a08868" }}
           >
-            Präzision,
-            <br />
-            <span style={{ color: "rgba(255,255,255,0.22)" }}>die man sieht.</span>
-          </h2>
+            Leistungen & Preise
+          </p>
+          <div
+            className="flex-1"
+            style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }}
+          />
         </motion.div>
 
         {/* ── Leistungsliste ── */}
