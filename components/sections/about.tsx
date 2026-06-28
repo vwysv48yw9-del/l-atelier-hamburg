@@ -100,46 +100,30 @@ export function About() {
             wenn derjenige, der ihn macht, wirklich zuhört.
           </p>
           <p className="text-[14.5px] leading-relaxed" style={{ color: "#4a4744" }}>
-            Seit 2016 führen wir L&apos;Atelier inhabergeführt in Hamburg-Billstedt.
+            Wir führen L&apos;Atelier inhabergeführt in Hamburg-Billstedt.
             Kein Filialkonzept. Keine anonyme Buchung. Du kommst rein, wir kennen dich —
             oder lernen dich kennen.
-          </p>
-          <p className="text-[14.5px] leading-relaxed" style={{ color: "#6a6764" }}>
-            Das Ergebnis spricht für sich.
           </p>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-2 gap-6 pt-9"
+          className="pt-9"
           style={{ borderTop: "1px solid rgba(27,30,30,0.1)" }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
+          variants={{
+            hidden:  { opacity: 0, y: 16, scale: 0.88 },
+            visible: { opacity: 1, y: 0,  scale: 1,
+              transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+          }}
         >
-          {[
-            { val: "10+", label: "Jahre Erfahrung" },
-            { val: "1:1", label: "Persönlich"      },
-          ].map((s) => (
-            <motion.div
-              key={s.label}
-              variants={{
-                hidden:  { opacity: 0, y: 16, scale: 0.88 },
-                visible: { opacity: 1, y: 0,  scale: 1,
-                  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-              }}
-            >
-              <div
-                className="font-display font-light mb-1.5"
-                style={{ fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", color: "#1c1f1f", letterSpacing: "-0.02em" }}
-              >
-                {s.val}
-              </div>
-              <div className="text-[9.5px] uppercase tracking-[0.2em]" style={{ color: "#c0b8b0" }}>
-                {s.label}
-              </div>
-            </motion.div>
-          ))}
+          <div
+            className="font-display font-light mb-1.5"
+            style={{ fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", color: "#1c1f1f", letterSpacing: "-0.02em" }}
+          >
+            1:1
+          </div>
+          <div className="text-[9.5px] uppercase tracking-[0.2em]" style={{ color: "#c0b8b0" }}>
+            Persönlich
+          </div>
         </motion.div>
       </motion.div>
     </section>

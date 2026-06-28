@@ -4,52 +4,56 @@ import { motion } from "motion/react"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-const SERVICES = [
+type ServiceItem = {
+  name:    string
+  desc:    string
+  price:   string
+  isExtra?: boolean
+}
+
+type ServiceGroup = {
+  heading: string
+  items:   ServiceItem[]
+}
+
+const SERVICE_GROUPS: ServiceGroup[] = [
   {
-    name:  "Herrenschnitt",
-    desc:  "Wir reden zuerst. Dann schneiden wir.",
-    price: "32",
+    heading: "Haarschnitt",
+    items: [
+      { name: "Herrenschnitt",         desc: "Wir reden zuerst. Dann schneiden wir.",                      price: "28" },
+      { name: "Skin / Low / Mid Fade", desc: "Den Übergang, den man erst beim zweiten Hinsehen bemerkt.", price: "24" },
+      { name: "Kinderschnitt",         desc: "Ruhig bleiben. Gut aussehen. Für die Kleinen.",              price: "18" },
+    ],
   },
   {
-    name:  "Kinderschnitt",
-    desc:  "Ruhig bleiben. Gut aussehen. Für die Kleinen.",
-    price: "22",
-    gap:   true,
+    heading: "Kombinationen",
+    items: [
+      { name: "Schnitt + Bart", desc: "Wenn Haar und Bart zur selben Person gehören.", price: "40" },
+      { name: "Schnitt + Fade", desc: "Klassische Länge oben. Moderne Kante unten.",  price: "34" },
+    ],
   },
   {
-    name:  "Skin / Low / Mid Fade",
-    desc:  "Den Übergang, den man erst beim zweiten Hinsehen bemerkt.",
-    price: "28",
+    heading: "Bart",
+    items: [
+      { name: "Bartpflege", desc: "Ein Bart, der Charakter hat — nicht nur Wuchs.", price: "14" },
+      { name: "Rasur",      desc: "Heiße Kompresse. Offene Klinge. Das Original.",   price: "18" },
+    ],
   },
   {
-    name:  "Shape Up",
-    desc:  "Wenn der Rahmen stimmt, stimmt alles.",
-    price: "18",
-  },
-  {
-    name:  "Schnitt + Fade",
-    desc:  "Klassische Länge oben. Moderne Kante unten.",
-    price: "38",
-    gap:   true,
-  },
-  {
-    name:  "Bartpflege",
-    desc:  "Ein Bart, der Charakter hat — nicht nur Wuchs.",
-    price: "18",
-  },
-  {
-    name:  "Rasur",
-    desc:  "Heiße Kompresse. Offene Klinge. Das Original.",
-    price: "22",
-  },
-  {
-    name:  "Schnitt + Bart",
-    desc:  "Wenn Haar und Bart zur selben Person gehören.",
-    price: "44",
+    heading: "Extras",
+    items: [
+      { name: "Haarwäsche",  desc: "Optional. Vor jedem Schnitt empfohlen.", price: "5", isExtra: true },
+      { name: "Augenbrauen", desc: "Ein Detail. Ein großer Unterschied.",     price: "6", isExtra: true },
+    ],
   },
 ]
 
-function ServiceRow({ item, index }: { item: typeof SERVICES[0]; index: number }) {
+// Pre-computed start indices for stagger delays — avoids mutation during render
+const GROUP_START_INDICES = SERVICE_GROUPS.map((_, i) =>
+  SERVICE_GROUPS.slice(0, i).reduce((sum, g) => sum + g.items.length, 0)
+)
+
+function ServiceRow({ item, index }: { item: ServiceItem; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 14 }}
@@ -57,11 +61,11 @@ function ServiceRow({ item, index }: { item: typeof SERVICES[0]; index: number }
       viewport={{ once: true, margin: "-20px" }}
       transition={{ duration: 0.7, ease: EASE, delay: index * 0.045 }}
     >
-      {/* Trennlinie — reagiert auf Hover des Rows */}
+      {/* Trennlinie */}
       <motion.div
         className="w-full"
         style={{
-          height: "1px",
+          height:          "1px",
           backgroundColor: index === 0
             ? "rgba(255,255,255,0.12)"
             : "rgba(255,255,255,0.07)",
@@ -75,18 +79,14 @@ function ServiceRow({ item, index }: { item: typeof SERVICES[0]; index: number }
         className="relative flex items-center justify-between gap-10 group cursor-default"
         style={{
           paddingTop:    "clamp(1.1rem, 2vw, 1.5rem)",
-          paddingBottom: item.gap
-            ? "clamp(1.7rem, 3vw, 2.4rem)"
-            : "clamp(1.1rem, 2vw, 1.5rem)",
+          paddingBottom: "clamp(1.1rem, 2vw, 1.5rem)",
         }}
         whileHover="hovered"
       >
         {/* Hover-Hintergrund */}
         <motion.div
           className="absolute -inset-x-4 inset-y-0 rounded-xl pointer-events-none"
-          variants={{
-            hovered: { backgroundColor: "rgba(255,255,255,0.022)" },
-          }}
+          variants={{ hovered: { backgroundColor: "rgba(255,255,255,0.022)" } }}
           style={{ backgroundColor: "rgba(255,255,255,0)" }}
           transition={{ duration: 0.35, ease: "easeOut" }}
         />
@@ -123,10 +123,7 @@ function ServiceRow({ item, index }: { item: typeof SERVICES[0]; index: number }
         <div className="relative shrink-0 text-right">
           <motion.div
             className="font-display font-light leading-none tabular-nums"
-            style={{
-              color:         "#a08868",
-              letterSpacing: "-0.02em",
-            }}
+            style={{ color: "#a08868", letterSpacing: "-0.02em" }}
             variants={{ hovered: { color: "#c9a97c" } }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
@@ -140,18 +137,13 @@ function ServiceRow({ item, index }: { item: typeof SERVICES[0]; index: number }
                 fontWeight:    300,
               }}
             >
-              ab
+              {item.isExtra ? "+" : "ab"}
             </span>
-            <span
-              style={{
-                fontSize: "clamp(2rem, 3.5vw, 2.7rem)",
-              }}
-            >
+            <span style={{ fontSize: "clamp(2rem, 3.5vw, 2.7rem)" }}>
               {item.price} €
             </span>
           </motion.div>
         </div>
-
       </motion.div>
     </motion.div>
   )
@@ -188,9 +180,40 @@ export function Services() {
 
         {/* ── Leistungsliste ── */}
         <div>
-          {SERVICES.map((item, i) => (
-            <ServiceRow key={item.name} item={item} index={i} />
-          ))}
+          {SERVICE_GROUPS.map((group, groupIndex) => {
+            const startIndex = GROUP_START_INDICES[groupIndex]
+            return (
+              <div key={group.heading}>
+
+                {/* Gruppenabstand (außer erste Gruppe) */}
+                {groupIndex > 0 && (
+                  <div style={{ height: "clamp(2rem, 3.5vw, 2.8rem)" }} />
+                )}
+
+                {/* Gruppenüberschrift */}
+                <motion.p
+                  className="text-[9px] tracking-[0.38em] uppercase font-medium mb-3"
+                  style={{ color: "rgba(160,136,104,0.55)" }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-20px" }}
+                  transition={{ duration: 0.7, ease: EASE, delay: startIndex * 0.045 }}
+                >
+                  {group.heading}
+                </motion.p>
+
+                {/* Zeilen */}
+                {group.items.map((item, itemIndex) => (
+                  <ServiceRow
+                    key={item.name}
+                    item={item}
+                    index={startIndex + itemIndex}
+                  />
+                ))}
+
+              </div>
+            )
+          })}
 
           {/* Abschlusslinie */}
           <motion.div

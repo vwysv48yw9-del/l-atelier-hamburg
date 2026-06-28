@@ -15,10 +15,10 @@ const WhatsAppIcon = () => (
 )
 
 const NAV = [
-  { label: "Salon",       href: "#salon"       },
   { label: "Leistungen",  href: "#leistungen"  },
+  { label: "Salon",       href: "#salon"       },
   { label: "Bewertungen", href: "#bewertungen" },
-  { label: "Kontakt",     href: "#kontakt"     },
+  { label: "Einblicke",   href: "#einblicke"   },
 ]
 
 export function Header() {
@@ -34,19 +34,22 @@ export function Header() {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveHref(`#${entry.target.id}`)
-        })
-      },
-      { rootMargin: "-30% 0px -60% 0px" }
-    )
-    NAV.forEach(({ href }) => {
-      const el = document.querySelector(href)
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
+    const TRIGGER = 0.35
+
+    const getActive = () => {
+      const vh = window.innerHeight
+      let active = ""
+      for (const { href } of NAV) {
+        const el = document.querySelector(href)
+        if (!el) continue
+        if (el.getBoundingClientRect().top <= vh * TRIGGER) active = href
+      }
+      setActiveHref(active)
+    }
+
+    window.addEventListener("scroll", getActive, { passive: true })
+    getActive()
+    return () => window.removeEventListener("scroll", getActive)
   }, [])
 
   useEffect(() => {

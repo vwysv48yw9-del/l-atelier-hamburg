@@ -115,8 +115,7 @@ export function Hero() {
             transition={{ delay: 0.48, duration: 1.0, ease: EASE }}
           >
             Schnitte,<br />
-            <span style={{ color: "rgba(247,244,239,0.75)" }}>die sitzen.</span><br />
-            <span style={{ color: "rgba(247,244,239,0.40)" }}>Seit 2016.</span>
+            <span style={{ color: "rgba(247,244,239,0.75)" }}>die sitzen.</span>
           </motion.h1>
 
           {/* CTA-Gruppe */}

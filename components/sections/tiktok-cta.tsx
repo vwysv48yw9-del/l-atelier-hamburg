@@ -200,6 +200,7 @@ export function TikTokCta() {
 
   return (
     <section
+      id="einblicke"
       style={{ backgroundColor: "#1c1f1f", borderTop: "1px solid rgba(255,255,255,0.05)" }}
       className="py-16 md:py-28"
     >

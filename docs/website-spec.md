@@ -102,7 +102,7 @@ Weitere Routen:
 | Salon | `#salon` |
 | Leistungen | `#leistungen` |
 | Bewertungen | `#bewertungen` |
-| Kontakt | `#kontakt` |
+| Einblicke | `#einblicke` |
 
 Aktiver Link wird per IntersectionObserver (`rootMargin: "-30% 0px -60% 0px"`) ermittelt.
 
@@ -150,13 +150,11 @@ Aktiver Link wird per IntersectionObserver (`rootMargin: "-30% 0px -60% 0px"`) e
 ```
 Schnitte,
 die sitzen.
-Seit 2016.
 ```
 - Font: `font-display`, `font-light`
 - Größe: `clamp(3.2rem, 6.5vw, 5.6rem)`
 - Farbe Zeile 1: `#F7F4EF`
 - Farbe Zeile 2: `rgba(247,244,239,0.75)`
-- Farbe Zeile 3: `rgba(247,244,239,0.40)`
 - `max-width: 13ch`
 
 ### CTA
@@ -181,31 +179,42 @@ Seit 2016.
 
 **Eyebrow:** `LEISTUNGEN & PREISE`
 
-**Headline (h2):**
-```
-Präzision,
-die man sieht.
-```
-- `clamp(3rem, 6vw, 5rem)`, `font-display`, `font-light`
-- Zeile 1: `#F5F3EE`
-- Zeile 2: `rgba(255,255,255,0.22)`
-
 ### Leistungsliste
 
-Jede Zeile: Name links (Größe + Farbe on Hover), Beschreibung darunter, Preis rechts (`ab X €`).
+Gruppierte Darstellung nach Kundenperspektive. Gruppenüberschriften: `9px`, `tracking-[0.38em]`, uppercase, `rgba(160,136,104,0.55)`. Jede Zeile: Name links (Größe + Farbe on Hover), Beschreibung darunter, Preis rechts. Zwischen den Gruppen visueller Abstand (`clamp(2rem, 3.5vw, 2.8rem)`).
+
+**Gruppe: Haarschnitt**
 
 | Leistung | Beschreibung | Preis |
 |---|---|---|
-| Herrenschnitt | Persönliche Beratung · Präziser Schnitt · Styling | ab 32 € |
-| Kinderschnitt | Entspannte Atmosphäre · Sorgfalt von Anfang an | ab 22 € |
-| Skin / Low / Mid Fade | Nahtlose Übergänge mit höchster Präzision | ab 28 € |
-| Shape Up | Klare Konturen. Sofort sichtbarer Unterschied. | ab 18 € |
-| Schnitt + Fade | Klassische Form, moderner Verlauf — aus einem Guss | ab 38 € |
-| Bartpflege | Perfekt geformt und sauber ausgearbeitet | ab 18 € |
-| Rasur | Heiße Kompresse · Präzise Klinge · Gepflegtes Finish | ab 22 € |
-| Schnitt + Bart | Frisur und Bartkonturen in perfekter Harmonie | ab 44 € |
+| Herrenschnitt | Wir reden zuerst. Dann schneiden wir. | ab 28 € |
+| Skin / Low / Mid Fade | Den Übergang, den man erst beim zweiten Hinsehen bemerkt. | ab 24 € |
+| Kinderschnitt | Ruhig bleiben. Gut aussehen. Für die Kleinen. | ab 18 € |
 
-Trennlinien zwischen Gruppen (`gap: true` nach Kinderschnitt und Schnitt + Fade).
+**Gruppe: Kombinationen**
+
+| Leistung | Beschreibung | Preis |
+|---|---|---|
+| Schnitt + Bart | Wenn Haar und Bart zur selben Person gehören. | ab 40 € |
+| Schnitt + Fade | Klassische Länge oben. Moderne Kante unten. | ab 34 € |
+
+**Gruppe: Bart**
+
+| Leistung | Beschreibung | Preis |
+|---|---|---|
+| Bartpflege | Ein Bart, der Charakter hat — nicht nur Wuchs. | ab 14 € |
+| Rasur | Heiße Kompresse. Offene Klinge. Das Original. | ab 18 € |
+
+**Gruppe: Extras** *(Add-ons, zusätzlich zu einem Termin buchbar)*
+
+| Leistung | Beschreibung | Preis |
+|---|---|---|
+| Haarwäsche | Optional. Vor jedem Schnitt empfohlen. | + 5 € |
+| Augenbrauen | Ein Detail. Ein großer Unterschied. | + 6 € |
+
+Extras-Preise werden mit `+` statt `ab` angezeigt.
+
+**Entfernt:** Shape Up (nicht mehr im Angebot).
 
 ### Footer der Sektion
 
@@ -237,17 +246,19 @@ einer Überzeugung.
 ```
 - `clamp(1.9rem, 3.6vw, 2.9rem)`, `font-display`, `font-light`
 
-**Fließtext (3 Absätze):**
+**Fließtext (2 Absätze):**
 1. > Dass ein Haarschnitt mehr ist als ein Haarschnitt — wenn derjenige, der ihn macht, wirklich zuhört.
-2. > Seit 2016 führen wir L'Atelier inhabergeführt in Hamburg-Billstedt. Kein Filialkonzept. Keine anonyme Buchung. Du kommst rein, wir kennen dich — oder lernen dich kennen.
-3. > Das Ergebnis spricht für sich.
+2. > Wir führen L'Atelier inhabergeführt in Hamburg-Billstedt. Kein Filialkonzept. Keine anonyme Buchung. Du kommst rein, wir kennen dich — oder lernen dich kennen.
 
-**Kennzahlen (2 Stats):**
+*Entfernt: „Das Ergebnis spricht für sich." — unbelegte Behauptung für einen neuen Salon. Beweisführung übernimmt die Reviews-Section.*
+
+**Kennzahl (1 Stat):**
 
 | Wert | Label |
 |---|---|
-| 10+ | Jahre Erfahrung |
 | 1:1 | Persönlich |
+
+*Entfernt: „10+ Jahre Erfahrung" — unbelegte Angabe. Wird ergänzt, wenn der Inhaber korrekte Daten liefert.*
 
 ---
 
