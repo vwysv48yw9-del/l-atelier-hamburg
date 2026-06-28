@@ -13,7 +13,6 @@ const VIDEOS = [
   { id: "2", label: "Transformation" },
   { id: "3", label: "Tägliches Handwerk" },
   { id: "4", label: "Einblick" },
-  { id: "5", label: "Ergebnis" },
 ]
 
 // Infinite loop: clone last item at front, first item at back
@@ -372,6 +371,7 @@ function InfiniteCarousel() {
       </div>
 
       {/* Dot indicators */}
+      {/* Always-3 indicator — communicates infinite loop, no start/end */}
       <div
         style={{
           display:        "flex",
@@ -381,18 +381,17 @@ function InfiniteCarousel() {
         }}
         aria-hidden="true"
       >
-        {VIDEOS.map((_, i) => {
-          const realActive = ((activeIdx - REAL_START) + VIDEOS.length) % VIDEOS.length
-          const isActiveDot = i === realActive
+        {([-1, 0, 1] as const).map((offset) => {
+          const isCenter = offset === 0
           return (
             <div
-              key={i}
+              key={offset}
               style={{
-                width:           isActiveDot ? "20px" : "6px",
+                width:           isCenter ? "20px" : "6px",
                 height:          "6px",
                 borderRadius:    "9999px",
-                backgroundColor: isActiveDot ? "#a08868" : "rgba(255,255,255,0.22)",
-                transition:      "width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease",
+                backgroundColor: isCenter ? "#a08868" : "rgba(255,255,255,0.22)",
+                transition:      "width 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             />
           )
@@ -448,8 +447,8 @@ export function TikTokCta() {
               <InfiniteCarousel />
             </div>
 
-            {/* Desktop: standard grid */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Desktop: standard grid — 2×2 at md, 1×4 at lg */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {VIDEOS.map((_, i) => (
                 <VideoCard key={i} index={i} isActive={false} />
               ))}

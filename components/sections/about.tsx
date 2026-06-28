@@ -67,7 +67,7 @@ export function About() {
       {/* Text rechts */}
       <motion.div
         className="flex flex-col justify-center px-8 py-16 sm:px-12 sm:py-20 lg:px-16 xl:px-24"
-        style={{ backgroundColor: "#f0eeeb" }}
+        style={{ backgroundColor: "#f5f3ee" }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
@@ -94,7 +94,7 @@ export function About() {
           einer Überzeugung.
         </motion.h2>
 
-        <motion.div variants={fadeUp(0.1)} className="flex flex-col gap-4 mb-10">
+        <motion.div variants={fadeUp(0.1)} className="flex flex-col gap-4">
           <p className="text-[14.5px] leading-relaxed font-medium" style={{ color: "#282520" }}>
             Dass ein Haarschnitt mehr ist als ein Haarschnitt —
             wenn derjenige, der ihn macht, wirklich zuhört.
@@ -104,26 +104,6 @@ export function About() {
             Kein Filialkonzept. Keine anonyme Buchung. Du kommst rein, wir kennen dich —
             oder lernen dich kennen.
           </p>
-        </motion.div>
-
-        <motion.div
-          className="pt-9"
-          style={{ borderTop: "1px solid rgba(27,30,30,0.1)" }}
-          variants={{
-            hidden:  { opacity: 0, y: 16, scale: 0.88 },
-            visible: { opacity: 1, y: 0,  scale: 1,
-              transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-          }}
-        >
-          <div
-            className="font-display font-light mb-1.5"
-            style={{ fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", color: "#1c1f1f", letterSpacing: "-0.02em" }}
-          >
-            1:1
-          </div>
-          <div className="text-[9.5px] uppercase tracking-[0.2em]" style={{ color: "#c0b8b0" }}>
-            Persönlich
-          </div>
         </motion.div>
       </motion.div>
     </section>

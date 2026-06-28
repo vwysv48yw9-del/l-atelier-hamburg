@@ -94,7 +94,7 @@ function Testimonial({ item, index }: { item: typeof TESTIMONIALS[0]; index: num
 
 export function Reviews() {
   return (
-    <section id="bewertungen" className="py-10 md:py-16" style={{ backgroundColor: "#faf8f5" }}>
+    <section id="bewertungen" className="py-10 md:py-16" style={{ backgroundColor: "#f5f3ee" }}>
       <div className="max-w-4xl mx-auto px-8 sm:px-12 md:px-20">
 
         {/* Header */}

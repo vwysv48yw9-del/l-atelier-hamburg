@@ -3,9 +3,33 @@
 import { useRef } from "react"
 import Image from "next/image"
 import { motion, useScroll, useTransform } from "motion/react"
+import { Phone, Calendar } from "lucide-react"
 import { SALON, WA_URL } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
+
+const glassBtn: React.CSSProperties = {
+  height:          "72px",
+  borderRadius:    "16px",
+  backgroundColor: "rgba(160,136,104,0.10)",
+  border:          "1px solid rgba(160,136,104,0.32)",
+  backdropFilter:  "blur(14px)",
+  WebkitBackdropFilter: "blur(14px)",
+  textDecoration:  "none",
+}
+const glassHover = {
+  backgroundColor: "rgba(160,136,104,0.20)",
+  borderColor:     "rgba(160,136,104,0.58)",
+  y: -2,
+}
+const glassTrans = { type: "tween" as const, duration: 0.22, ease: [0.25, 0, 0.35, 1] as const }
+const btnLabel: React.CSSProperties = {
+  fontSize:      "10.5px",
+  letterSpacing: "0.10em",
+  textTransform: "uppercase",
+  color:         "rgba(255,255,255,0.75)",
+  fontWeight:    500,
+}
 
 const WhatsAppIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -80,26 +104,6 @@ export function Hero() {
       >
         <div className="w-full max-w-6xl mx-auto px-8 sm:px-12 md:px-20 pb-32 sm:pb-28 md:pb-36">
 
-          {/* Eyebrow — Text erscheint, dann zieht die Linie sich nach rechts */}
-          <div className="flex items-center gap-5 mb-7 overflow-hidden">
-            <motion.p
-              className="shrink-0 text-[9px] sm:text-[10px] tracking-[0.38em] uppercase font-medium"
-              style={{ color: "#a08868" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35, duration: 0.8, ease: EASE }}
-            >
-              {SALON.district} · {SALON.street}
-            </motion.p>
-            <motion.div
-              className="flex-1 h-px"
-              style={{ backgroundColor: "rgba(160,136,104,0.40)", transformOrigin: "left" }}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.72, duration: 1.5, ease: EASE }}
-            />
-          </div>
-
           {/* Headline */}
           <motion.h1
             className="font-display font-light mb-10 md:mb-12"
@@ -118,42 +122,53 @@ export function Hero() {
             <span style={{ color: "rgba(247,244,239,0.75)" }}>die sitzen.</span>
           </motion.h1>
 
-          {/* CTA-Gruppe */}
+          {/* CTA-Gruppe — drei gleichwertige Glass-Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.9, ease: EASE }}
           >
-            <motion.a
-              href={WA_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 font-semibold text-white w-full sm:w-auto"
-              style={{
-                fontSize:        "12.5px",
-                letterSpacing:   "0.08em",
-                textTransform:   "uppercase",
-                backgroundColor: "rgba(160,136,104,0.16)",
-                border:          "1px solid rgba(160,136,104,0.55)",
-                backdropFilter:  "blur(12px)",
-                height:          "56px",
-                paddingLeft:     "32px",
-                paddingRight:    "36px",
-                borderRadius:    "9999px",
-              }}
-              whileHover={{
-                backgroundColor: "rgba(160,136,104,0.28)",
-                borderColor:     "rgba(160,136,104,0.80)",
-                scale:           1.015,
-                y:               -1,
-              }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
-            >
-              <WhatsAppIcon />
-              Jetzt Termin anfragen
-            </motion.a>
+            {/* Mobile: 2+1 / Desktop: 3 nebeneinander */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" style={{ maxWidth: "480px" }}>
+
+              {/* WhatsApp */}
+              <motion.a
+                href={WA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center justify-center gap-2 text-white"
+                style={glassBtn}
+                whileHover={glassHover}
+                whileTap={{ scale: 0.96 }}
+                transition={glassTrans}
+              >
+                <WhatsAppIcon />
+                <span style={btnLabel}>WhatsApp</span>
+              </motion.a>
+
+              {/* Telefon */}
+              <motion.a
+                href={SALON.phoneHref}
+                className="flex flex-col items-center justify-center gap-2 text-white"
+                style={glassBtn}
+                whileHover={glassHover}
+                whileTap={{ scale: 0.96 }}
+                transition={glassTrans}
+              >
+                <Phone size={16} strokeWidth={1.5} />
+                <span style={btnLabel}>Telefon</span>
+              </motion.a>
+
+              {/* Online buchen — Platzhalter, kein Link */}
+              <div
+                className="col-span-2 sm:col-span-1 flex flex-col items-center justify-center gap-2"
+                style={{ ...glassBtn, opacity: 0.4, cursor: "default" }}
+              >
+                <Calendar size={16} strokeWidth={1.5} />
+                <span style={btnLabel}>Online buchen</span>
+              </div>
+
+            </div>
           </motion.div>
 
         </div>
