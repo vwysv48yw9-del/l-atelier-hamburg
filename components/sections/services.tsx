@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "motion/react"
-import { WA_URL } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -191,7 +190,7 @@ export function Services() {
 
           {/* Headline */}
           <h2
-            className="font-display font-light leading-[1.06] mb-8"
+            className="font-display font-light leading-[1.06]"
             style={{
               fontSize:      "clamp(3rem, 6vw, 5rem)",
               color:         "#F5F3EE",
@@ -202,20 +201,6 @@ export function Services() {
             <br />
             <span style={{ color: "rgba(255,255,255,0.22)" }}>die man sieht.</span>
           </h2>
-
-          {/* Intro */}
-          <p
-            className="leading-relaxed"
-            style={{
-              fontSize:      "clamp(0.95rem, 1.45vw, 1.08rem)",
-              color:         "rgba(245,243,238,0.42)",
-              letterSpacing: "0.01em",
-              maxWidth:      "52ch",
-            }}
-          >
-            Jede Leistung mit der Sorgfalt, die sie verdient.
-            Persönlich. Präzise. Jedes Mal.
-          </p>
         </motion.div>
 
         {/* ── Leistungsliste ── */}
@@ -234,7 +219,7 @@ export function Services() {
 
         {/* ── Footer ── */}
         <motion.div
-          className="mt-10 md:mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5"
+          className="mt-10 md:mt-14"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -249,28 +234,6 @@ export function Services() {
           >
             Alle Preise inkl. MwSt.
           </p>
-
-          <motion.a
-            href={WA_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center font-medium"
-            style={{
-              fontSize:        "10.5px",
-              letterSpacing:   "0.22em",
-              textTransform:   "uppercase",
-              color:           "#6a6460",
-              border:          "1px solid rgba(255,255,255,0.09)",
-              padding:         "0 28px",
-              height:          "44px",
-              borderRadius:    "9999px",
-            }}
-            whileHover={{ scale: 1.015, y: -1, color: "#C8C2B8" }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
-          >
-            Termin anfragen
-          </motion.a>
         </motion.div>
 
       </div>

@@ -8,16 +8,16 @@ const EASE = [0.16, 1, 0.3, 1] as const
 
 const TESTIMONIALS = [
   {
-    text: "Wenn Sie möchten, dass Ihr Friseur auch Ihr Freund ist, kann ich diesen Salon wärmstens empfehlen. Die Professionalität dort ist in Hamburg seit Langem beispiellos.",
-    name: "Jakub Ulatowski",
+    text: "War heute das erste Mal bei L'Atelier und bin wirklich begeistert. Man wird super freundlich empfangen und vor allem sehr ehrlich und professionell beraten.",
+    name: "Michelle",
   },
   {
     text: "Sehr angenehme Atmosphäre und ein wirklich gutes Ergebnis. Man merkt, dass hier mit Sorgfalt gearbeitet wird. Komme auf jeden Fall wieder.",
     name: "Florian Kaßner",
   },
   {
-    text: "War heute das erste Mal bei L'Atelier und bin wirklich begeistert. Man wird super freundlich empfangen und vor allem sehr ehrlich und professionell beraten.",
-    name: "Michelle",
+    text: "Wenn Sie möchten, dass Ihr Friseur auch Ihr Freund ist, kann ich diesen Salon wärmstens empfehlen. Die Professionalität dort ist in Hamburg seit Langem beispiellos.",
+    name: "Jakub Ulatowski",
   },
 ]
 

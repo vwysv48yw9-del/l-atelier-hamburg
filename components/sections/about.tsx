@@ -2,9 +2,7 @@
 
 import { useRef } from "react"
 import Image from "next/image"
-import { ArrowRight } from "lucide-react"
 import { motion, useScroll, useTransform } from "motion/react"
-import { SALON, WA_URL } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -96,7 +94,7 @@ export function About() {
           einer Überzeugung.
         </motion.h2>
 
-        <motion.div variants={fadeUp(0.1)} className="flex flex-col gap-4 mb-12">
+        <motion.div variants={fadeUp(0.1)} className="flex flex-col gap-4 mb-10">
           <p className="text-[14.5px] leading-relaxed font-medium" style={{ color: "#282520" }}>
             Dass ein Haarschnitt mehr ist als ein Haarschnitt —
             wenn derjenige, der ihn macht, wirklich zuhört.
@@ -112,7 +110,7 @@ export function About() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-3 gap-6 mb-12 pt-9"
+          className="grid grid-cols-2 gap-6 pt-9"
           style={{ borderTop: "1px solid rgba(27,30,30,0.1)" }}
           initial="hidden"
           whileInView="visible"
@@ -120,9 +118,8 @@ export function About() {
           variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
         >
           {[
-            { val: "9+",               label: "Jahre Erfahrung" },
-            { val: "1:1",              label: "Persönlich"      },
-            { val: SALON.google.score, label: "Google Score"    },
+            { val: "10+", label: "Jahre Erfahrung" },
+            { val: "1:1", label: "Persönlich"      },
           ].map((s) => (
             <motion.div
               key={s.label}
@@ -143,25 +140,6 @@ export function About() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div variants={fadeUp(0.2)}>
-          <motion.a
-            href={WA_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase font-semibold border-b pb-1.5 transition-colors duration-300 hover:text-[#a08868]"
-            style={{ color: "#1c1f1f", borderColor: "rgba(27,30,30,0.15)" }}
-            whileHover={{ x: 3 }}
-            transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
-          >
-            Termin vereinbaren
-            <ArrowRight
-              size={11}
-              strokeWidth={1.5}
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </motion.a>
         </motion.div>
       </motion.div>
     </section>

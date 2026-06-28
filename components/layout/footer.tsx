@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
-import { SALON, WA_URL } from "@/lib/config"
+import { SALON } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -100,17 +100,6 @@ export function Footer() {
                 transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
               >
                 {SALON.phone}
-              </motion.a>
-              <motion.a
-                href={WA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[13px] transition-colors duration-300 hover:text-white"
-                style={{ color: "#7a7674" }}
-                whileHover={{ x: 2 }}
-                transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
-              >
-                WhatsApp
               </motion.a>
               <motion.a
                 href={SALON.mapsUrl}
