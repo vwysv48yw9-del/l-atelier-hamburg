@@ -109,12 +109,8 @@ function VideoCard({ index }: { index: number }) {
       href={SALON.tiktok}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block shrink-0"
+      className="group block"
       style={{
-        // Mobile: nahezu volle Breite (mit Peek des nächsten)
-        // Tablet: 2 sichtbar
-        // Desktop: 3 sichtbar — wird per CSS-Klasse gesteuert
-        scrollSnapAlign: "start",
         borderRadius:    "18px",
         overflow:        "hidden",
         position:        "relative",
@@ -123,8 +119,9 @@ function VideoCard({ index }: { index: number }) {
         border:          "1px solid rgba(255,255,255,0.07)",
         cursor:          "pointer",
         textDecoration:  "none",
+        width:           "100%",
+        display:         "block",
       }}
-      // Breite via className (Tailwind) — inline style geht nicht bei Breakpoints
       whileHover={{ borderColor: "rgba(160,136,104,0.35)" }}
       transition={{ type: "tween", duration: 0.22, ease: "easeOut" }}
     >
@@ -199,6 +196,7 @@ function VideoCard({ index }: { index: number }) {
 
 export function TikTokCta() {
   const [imgError, setImgError] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
 
   return (
     <section
@@ -216,7 +214,7 @@ export function TikTokCta() {
           {/* ── Oberer Bereich: zwei Spalten ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start mb-16">
 
-            {/* Links: Eyebrow + Headline + Body */}
+            {/* Links: Eyebrow + Headline */}
             <div>
               <p
                 className="text-[10px] tracking-[0.40em] uppercase font-medium mb-9"
@@ -231,7 +229,6 @@ export function TikTokCta() {
               >
                 Überzeuge dich selbst.
               </h2>
-
             </div>
 
             {/* Rechts: Profilkarte */}
@@ -240,40 +237,63 @@ export function TikTokCta() {
             </div>
           </div>
 
-          {/* ── Video-Slider ── */}
+          {/* ── Video-Slider ──
+              Mobile:  Peek-Carousel — aktive Karte zentriert, ~19% Nachbarkarte sichtbar
+                       Slider bricht per negativer Margin auf volle Viewport-Breite aus.
+                       Ghost-Spacer links/rechts ermöglichen, dass erste/letzte Karte
+                       korrekt zentrieren kann.
+              Desktop: Standard-Grid (2 bzw. 3 Karten sichtbar)
+          ── */}
           <div
+            className="-mx-8 sm:-mx-12 md:mx-0 [&::-webkit-scrollbar]:hidden"
             style={{
-              overflowX:         "auto",
-              scrollSnapType:    "x mandatory",
-              scrollbarWidth:    "none",   /* Firefox */
-              msOverflowStyle:   "none",   /* IE */
+              overflowX:               "auto",
+              scrollSnapType:          "x mandatory",
+              scrollbarWidth:          "none",
+              msOverflowStyle:         "none",
               WebkitOverflowScrolling: "touch",
-              paddingBottom:     "8px",    /* Raum für möglichen Schatten */
+              paddingBottom:           "12px",
             }}
-            className="[&::-webkit-scrollbar]:hidden"
+            onScroll={() => !hasScrolled && setHasScrolled(true)}
           >
-            <div
-              style={{ display: "flex", gap: "16px" }}
-            >
+            <div className="flex gap-3 md:gap-4">
+
+              {/* Ghost-Spacer links — zentriert erste Karte (nur Mobile).
+                  Breite = (viewport - card) / 2 - gap = 16vw - 12px */}
+              <div className="shrink-0 w-[calc(16vw-12px)] md:hidden" aria-hidden="true" />
+
               {VIDEOS.map((_, i) => (
                 <div
                   key={i}
-                  // Breakpoints via Tailwind-Klassen:
-                  // Mobile:  85vw (peek des nächsten sichtbar)
-                  // md:      calc(50% - 8px) → 2 sichtbar
-                  // lg:      calc(33.333% - 11px) → 3 sichtbar
-                  className="min-w-[72vw] md:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)]"
+                  // snap-center auf Mobile, snap-start auf Desktop
+                  className="shrink-0 snap-center md:snap-start min-w-[68vw] md:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)]"
                 >
                   <VideoCard index={i} />
                 </div>
               ))}
+
+              {/* Ghost-Spacer rechts — ermöglicht letzte Karte zu zentrieren (nur Mobile) */}
+              <div className="shrink-0 w-[calc(16vw-12px)] md:hidden" aria-hidden="true" />
+
             </div>
           </div>
 
-          {/* Hint */}
-          <p className="mt-5 text-center" style={{ fontSize: "12px", color: "rgba(255,255,255,0.32)", letterSpacing: "0.12em" }}>
-            ← Scrollen →
-          </p>
+          {/* Hint — verschwindet nach erstem Wischen */}
+          <motion.p
+            className="mt-6 text-center"
+            style={{
+              fontSize:      "13px",
+              letterSpacing: "0.14em",
+              color:         "rgba(255,255,255,0.45)",
+              pointerEvents: "none",
+              userSelect:    "none",
+            }}
+            animate={{ opacity: hasScrolled ? 0 : 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            aria-hidden={hasScrolled}
+          >
+            ← Wischen →
+          </motion.p>
 
         </motion.div>
       </div>
