@@ -30,6 +30,7 @@ Die Startseite (`/`) setzt sich aus diesen Elementen in dieser Reihenfolge zusam
 [Reviews]              — Google-Bewertungen
 [Transition-Gradient]  — visueller Übergang hell→dunkel (kein Text, nur Gestaltung)
 [Contact]              — Kontakt-CTA + Kartenbereich
+[TikTokCta]            — Social-Media-Einblick (Platzhalter bis Go-live)
 [Footer]               — Adresse, Öffnungszeiten, Links
 [StickyWhatsApp]       — Fixierter CTA-Button (nur Mobile, erscheint nach 400px Scroll)
 ```
@@ -330,9 +331,10 @@ Jedes Testimonial: Blockquote (display italic) + 5 Sterne + Name uppercase + `·
 ## TikTokCta
 
 **Komponente:** `components/sections/tiktok-cta.tsx`
-**Status: Inaktiv** — aus `app/page.tsx` entfernt bis echte TikTok-Videos vorliegen
 **Hintergrund:** `#1c1f1f`, `border-top: rgba(255,255,255,0.05)`
 **Kein ID-Anker** (kein Nav-Link)
+
+> **Platzhalter-Status:** Die Video-Karten verwenden bis zum Go-live bewusst Platzhalter-IDs (`"1"` bis `"5"`). Die Sektion dient in der Präsentationsphase als Visualisierung zukünftiger Funktionalität — sie zeigt dem Kunden, dass TikTok integriert wird und wie die fertige Sektion aussehen wird. Vor Veröffentlichung müssen die Platzhalter durch echte TikTok-Video-IDs ersetzt werden.
 
 ### Oberer Bereich (2-spaltig, lg)
 
@@ -468,7 +470,6 @@ Diese Komponenten existieren im Codebase, sind aber **nicht in `app/page.tsx` ei
 | `Impressions` | `sections/impressions.tsx` | 3-spaltige Fotogalerie (3 Unsplash-Platzhalter) | Kein eigenes Bildmaterial |
 | `Map` | `sections/map.tsx` | Google-Maps-Iframe + Anfahrtsbeschreibung (ÖPNV + PKW) | Ersetzt durch statisches Kartenbild in Contact/Location |
 | `VisualBreak` | `sections/visual-break.tsx` | Parallax-Vollbild (Innen-Foto), großes Zitat: *Jeder Schnitt bekommt die Zeit, die er verdient.* | Nicht in aktuelle Page eingebunden |
-| `TikTokCta` | `sections/tiktok-cta.tsx` | Social-Media-Einblick, Video-Slider, Profilkarte | Deaktiviert bis echte TikTok-Video-IDs vorliegen |
 
 ---
 
