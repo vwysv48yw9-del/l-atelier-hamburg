@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import Image from "next/image"
 import { motion, useScroll, useTransform } from "motion/react"
-import { WA_URL } from "@/lib/config"
+import { SALON, WA_URL } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
