@@ -23,7 +23,10 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "L'Atelier Hamburg Billstedt | Herrenfriseur & Fades",
   description:
     "Moderne Herrenschnitte, Fades und Bartpflege in Hamburg-Billstedt. Termine bequem per WhatsApp vereinbaren.",
@@ -33,6 +36,21 @@ export const metadata: Metadata = {
       "Moderne Herrenschnitte, Fades und Bartpflege in Hamburg-Billstedt. Termine bequem per WhatsApp vereinbaren.",
     locale: "de_DE",
     type: "website",
+    images: [
+      {
+        url: "/images/innen.png",
+        width: 1402,
+        height: 1122,
+        alt: "L'Atelier Hamburg – Innenansicht des Barbershops",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "L'Atelier Hamburg Billstedt | Herrenfriseur & Fades",
+    description:
+      "Moderne Herrenschnitte, Fades und Bartpflege in Hamburg-Billstedt. Termine bequem per WhatsApp vereinbaren.",
+    images: ["/images/innen.png"],
   },
 }
 

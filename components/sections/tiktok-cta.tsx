@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { motion } from "motion/react"
 import { ArrowUpRight, Play } from "lucide-react"
@@ -8,8 +8,6 @@ import { SALON } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-// TikTok-Video-IDs von @latelier.du.style0 — hier echte IDs eintragen.
-// Format: https://www.tiktok.com/@latelier.du.style0/video/VIDEO_ID
 const VIDEOS = [
   { id: "1", label: "Schnitt & Style" },
   { id: "2", label: "Transformation" },
@@ -17,6 +15,14 @@ const VIDEOS = [
   { id: "4", label: "Einblick" },
   { id: "5", label: "Ergebnis" },
 ]
+
+// Infinite loop: clone last item at front, first item at back
+const EXTENDED = [VIDEOS[VIDEOS.length - 1], ...VIDEOS, VIDEOS[0]]
+const REAL_START = 1 // index of first real video in EXTENDED
+const REAL_END = VIDEOS.length // index of last real video in EXTENDED
+
+const CARD_FRACTION = 0.65 // active card takes 65% of container width (~15% peek on each side)
+const GAP = 12 // px between cards
 
 const TikTokIcon = () => (
   <svg
@@ -103,39 +109,40 @@ function ProfileCard({ imgError, setImgError }: { imgError: boolean; setImgError
   )
 }
 
-function VideoCard({ index }: { index: number }) {
+function VideoCard({ index, isActive }: { index: number; isActive: boolean }) {
   return (
-    <motion.a
+    <a
       href={SALON.tiktok}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block"
+      draggable={false}
       style={{
         borderRadius:    "18px",
         overflow:        "hidden",
         position:        "relative",
         aspectRatio:     "9 / 16",
         backgroundColor: "rgba(255,255,255,0.03)",
-        border:          "1px solid rgba(255,255,255,0.07)",
+        border:          isActive
+          ? "1px solid rgba(160,136,104,0.30)"
+          : "1px solid rgba(255,255,255,0.06)",
         cursor:          "pointer",
         textDecoration:  "none",
         width:           "100%",
         display:         "block",
+        userSelect:      "none",
+        WebkitUserDrag:  "none" as React.CSSProperties["WebkitUserDrag"],
+        transition:      "border-color 0.4s ease",
       }}
-      whileHover={{ borderColor: "rgba(160,136,104,0.35)" }}
-      transition={{ type: "tween", duration: 0.22, ease: "easeOut" }}
     >
-      {/* Hintergrund-Gradient */}
       <div
         style={{
           position: "absolute", inset: 0,
           background: `linear-gradient(160deg,
-            rgba(${20 + index * 4},${22 + index * 3},${22 + index * 2},1) 0%,
+            rgba(${20 + (index % VIDEOS.length) * 4},${22 + (index % VIDEOS.length) * 3},${22 + (index % VIDEOS.length) * 2},1) 0%,
             rgba(14,16,16,1) 100%)`,
         }}
       />
 
-      {/* Zentriertes Play-Icon */}
       <div
         style={{
           position:       "absolute",
@@ -148,26 +155,25 @@ function VideoCard({ index }: { index: number }) {
         }}
       >
         <div
-          className="transition-all duration-300 group-hover:scale-110"
           style={{
             width:           "56px",
             height:          "56px",
             borderRadius:    "50%",
-            backgroundColor: "rgba(160,136,104,0.12)",
-            border:          "1px solid rgba(160,136,104,0.28)",
+            backgroundColor: isActive ? "rgba(160,136,104,0.18)" : "rgba(160,136,104,0.08)",
+            border:          isActive ? "1px solid rgba(160,136,104,0.40)" : "1px solid rgba(160,136,104,0.18)",
             display:         "flex",
             alignItems:      "center",
             justifyContent:  "center",
+            transition:      "all 0.4s ease",
           }}
         >
-          <Play size={20} strokeWidth={1.5} style={{ color: "#c4a882", marginLeft: "2px" }} />
+          <Play size={20} strokeWidth={1.5} style={{ color: isActive ? "#c4a882" : "#7a6648", marginLeft: "2px", transition: "color 0.4s ease" }} />
         </div>
-        <span style={{ fontSize: "11px", color: "rgba(245,243,238,0.28)", letterSpacing: "0.08em" }}>
+        <span style={{ fontSize: "11px", color: isActive ? "rgba(245,243,238,0.32)" : "rgba(245,243,238,0.16)", letterSpacing: "0.08em", transition: "color 0.4s ease" }}>
           @latelier.du.style0
         </span>
       </div>
 
-      {/* Unten: TikTok-Badge */}
       <div
         style={{
           position:        "absolute",
@@ -183,6 +189,8 @@ function VideoCard({ index }: { index: number }) {
           borderRadius:    "9999px",
           padding:         "6px 14px",
           whiteSpace:      "nowrap",
+          opacity:         isActive ? 1 : 0,
+          transition:      "opacity 0.4s ease",
         }}
       >
         <TikTokIcon />
@@ -190,13 +198,193 @@ function VideoCard({ index }: { index: number }) {
           TikTok ansehen
         </span>
       </div>
-    </motion.a>
+    </a>
+  )
+}
+
+function InfiniteCarousel() {
+  // activeIdx indexes into EXTENDED (1 = first real video)
+  const [activeIdx, setActiveIdx] = useState(REAL_START)
+  const [animated, setAnimated] = useState(true)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const touchStartX = useRef(0)
+  const touchStartY = useRef(0)
+  const isDragging = useRef(false)
+  const dragStartX = useRef(0)
+  const dragOffset = useRef(0)
+  const isJumping = useRef(false)
+
+  const getTranslateX = useCallback((idx: number, containerW: number) => {
+    const cardW = containerW * CARD_FRACTION
+    const centerOffset = (containerW - cardW) / 2
+    return centerOffset - idx * (cardW + GAP)
+  }, [])
+
+  const applyTransform = useCallback((tx: number, animate: boolean) => {
+    const track = trackRef.current
+    if (!track) return
+    track.style.transition = animate ? "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1)" : "none"
+    track.style.transform = `translateX(${tx}px)`
+  }, [])
+
+  const goTo = useCallback((idx: number, anim = true) => {
+    const containerW = containerRef.current?.offsetWidth ?? 0
+    setAnimated(anim)
+    setActiveIdx(idx)
+    applyTransform(getTranslateX(idx, containerW), anim)
+  }, [applyTransform, getTranslateX])
+
+  // Initial position (no animation)
+  useEffect(() => {
+    const containerW = containerRef.current?.offsetWidth ?? 0
+    applyTransform(getTranslateX(REAL_START, containerW), false)
+  }, [applyTransform, getTranslateX])
+
+  // After transition ends, jump from clone to real without animation
+  const handleTransitionEnd = useCallback(() => {
+    if (isJumping.current) return
+    const containerW = containerRef.current?.offsetWidth ?? 0
+
+    if (activeIdx === 0) {
+      isJumping.current = true
+      applyTransform(getTranslateX(REAL_END, containerW), false)
+      setActiveIdx(REAL_END)
+      requestAnimationFrame(() => { isJumping.current = false })
+    } else if (activeIdx === EXTENDED.length - 1) {
+      isJumping.current = true
+      applyTransform(getTranslateX(REAL_START, containerW), false)
+      setActiveIdx(REAL_START)
+      requestAnimationFrame(() => { isJumping.current = false })
+    }
+  }, [activeIdx, applyTransform, getTranslateX])
+
+  // Recalculate on resize
+  useEffect(() => {
+    const obs = new ResizeObserver(() => {
+      const containerW = containerRef.current?.offsetWidth ?? 0
+      applyTransform(getTranslateX(activeIdx, containerW), false)
+    })
+    if (containerRef.current) obs.observe(containerRef.current)
+    return () => obs.disconnect()
+  }, [activeIdx, applyTransform, getTranslateX])
+
+  // Touch handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+  }
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current
+    const dy = e.changedTouches[0].clientY - touchStartY.current
+    if (Math.abs(dx) < 10 || Math.abs(dy) > Math.abs(dx) * 1.5) return
+    if (dx < -30) goTo(activeIdx + 1)
+    else if (dx > 30) goTo(activeIdx - 1)
+  }
+
+  // Mouse drag (desktop preview)
+  const onMouseDown = (e: React.MouseEvent) => {
+    isDragging.current = true
+    dragStartX.current = e.clientX
+    dragOffset.current = 0
+  }
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current) return
+    const containerW = containerRef.current?.offsetWidth ?? 0
+    dragOffset.current = e.clientX - dragStartX.current
+    applyTransform(getTranslateX(activeIdx, containerW) + dragOffset.current, false)
+  }
+
+  const onMouseUp = () => {
+    if (!isDragging.current) return
+    isDragging.current = false
+    if (dragOffset.current < -50) goTo(activeIdx + 1)
+    else if (dragOffset.current > 50) goTo(activeIdx - 1)
+    else goTo(activeIdx)
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      style={{ overflow: "hidden", cursor: "grab", userSelect: "none" }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+    >
+      <div
+        ref={trackRef}
+        style={{
+          display:    "flex",
+          alignItems: "center",
+          gap:        `${GAP}px`,
+          willChange: "transform",
+        }}
+        onTransitionEnd={handleTransitionEnd}
+      >
+        {EXTENDED.map((video, i) => {
+          const isActive = i === activeIdx
+          const dist = Math.abs(i - activeIdx)
+          const scale = isActive ? 1 : dist === 1 ? 0.93 : 0.88
+          const opacity = isActive ? 1 : dist === 1 ? 0.55 : 0.35
+
+          return (
+            <div
+              key={`${i}-${video.id}`}
+              style={{
+                flexShrink: 0,
+                width:      `${CARD_FRACTION * 100}%`,
+                transform:  `scale(${scale})`,
+                opacity,
+                transition: "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1)",
+                // Anchor scale to the inner edge so the peeking sliver stays visible; center vertically
+                transformOrigin: i < activeIdx ? "right center" : i > activeIdx ? "left center" : "center center",
+                pointerEvents: isActive ? "auto" : "none",
+              }}
+            >
+              <VideoCard index={i % VIDEOS.length} isActive={isActive} />
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Dot indicators */}
+      <div
+        style={{
+          display:        "flex",
+          justifyContent: "center",
+          gap:            "7px",
+          marginTop:      "20px",
+        }}
+        aria-hidden="true"
+      >
+        {VIDEOS.map((_, i) => {
+          const realActive = ((activeIdx - REAL_START) + VIDEOS.length) % VIDEOS.length
+          const isActiveDot = i === realActive
+          return (
+            <div
+              key={i}
+              style={{
+                width:           isActiveDot ? "20px" : "6px",
+                height:          "6px",
+                borderRadius:    "9999px",
+                backgroundColor: isActiveDot ? "#a08868" : "rgba(255,255,255,0.22)",
+                transition:      "width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease",
+              }}
+            />
+          )
+        })}
+      </div>
+    </div>
   )
 }
 
 export function TikTokCta() {
   const [imgError, setImgError] = useState(false)
-  const [hasScrolled, setHasScrolled] = useState(false)
 
   return (
     <section
@@ -215,7 +403,6 @@ export function TikTokCta() {
           {/* ── Oberer Bereich: zwei Spalten ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start mb-16">
 
-            {/* Links: Eyebrow + Headline */}
             <div>
               <p
                 className="text-[10px] tracking-[0.40em] uppercase font-medium mb-9"
@@ -232,69 +419,25 @@ export function TikTokCta() {
               </h2>
             </div>
 
-            {/* Rechts: Profilkarte */}
             <div className="flex items-start lg:justify-end">
               <ProfileCard imgError={imgError} setImgError={setImgError} />
             </div>
           </div>
 
-          {/* ── Video-Slider ──
-              Mobile:  Peek-Carousel — aktive Karte zentriert, ~19% Nachbarkarte sichtbar
-                       Slider bricht per negativer Margin auf volle Viewport-Breite aus.
-                       Ghost-Spacer links/rechts ermöglichen, dass erste/letzte Karte
-                       korrekt zentrieren kann.
-              Desktop: Standard-Grid (2 bzw. 3 Karten sichtbar)
-          ── */}
-          <div
-            className="-mx-8 sm:-mx-12 md:mx-0 [&::-webkit-scrollbar]:hidden"
-            style={{
-              overflowX:               "auto",
-              scrollSnapType:          "x mandatory",
-              scrollbarWidth:          "none",
-              msOverflowStyle:         "none",
-              WebkitOverflowScrolling: "touch",
-              paddingBottom:           "12px",
-            }}
-            onScroll={() => !hasScrolled && setHasScrolled(true)}
-          >
-            <div className="flex gap-3 md:gap-4">
+          {/* ── Infinite Peek-Carousel (mobile + desktop) ── */}
+          <div className="-mx-8 sm:-mx-12 md:mx-0">
+            {/* Mobile: full-bleed infinite carousel */}
+            <div className="md:hidden">
+              <InfiniteCarousel />
+            </div>
 
-              {/* Ghost-Spacer links — zentriert erste Karte (nur Mobile).
-                  Breite = (viewport - card) / 2 - gap = 16vw - 12px */}
-              <div className="shrink-0 w-[calc(16vw-12px)] md:hidden" aria-hidden="true" />
-
+            {/* Desktop: standard grid */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {VIDEOS.map((_, i) => (
-                <div
-                  key={i}
-                  // snap-center auf Mobile, snap-start auf Desktop
-                  className="shrink-0 snap-center md:snap-start min-w-[68vw] md:min-w-[calc(50%-8px)] lg:min-w-[calc(33.333%-11px)]"
-                >
-                  <VideoCard index={i} />
-                </div>
+                <VideoCard key={i} index={i} isActive={false} />
               ))}
-
-              {/* Ghost-Spacer rechts — ermöglicht letzte Karte zu zentrieren (nur Mobile) */}
-              <div className="shrink-0 w-[calc(16vw-12px)] md:hidden" aria-hidden="true" />
-
             </div>
           </div>
-
-          {/* Hint — verschwindet nach erstem Wischen */}
-          <motion.p
-            className="mt-6 text-center md:hidden"
-            style={{
-              fontSize:      "13px",
-              letterSpacing: "0.14em",
-              color:         "rgba(255,255,255,0.45)",
-              pointerEvents: "none",
-              userSelect:    "none",
-            }}
-            animate={{ opacity: hasScrolled ? 0 : 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            aria-hidden={hasScrolled}
-          >
-            ← Wischen →
-          </motion.p>
 
         </motion.div>
       </div>
