@@ -7,203 +7,263 @@ const EASE = [0.16, 1, 0.3, 1] as const
 
 const SERVICES = [
   {
-    category: "Schnitt",
-    items: [
-      { name: "Herrenschnitt",        desc: "Waschen · Schneiden · Stylen",           price: "32" },
-      { name: "Kinderschnitt",         desc: "bis 12 Jahre",                           price: "22" },
-    ],
+    name:  "Herrenschnitt",
+    desc:  "Persönliche Beratung · Präziser Schnitt · Styling",
+    price: "32",
   },
   {
-    category: "Fade & Styling",
-    items: [
-      { name: "Skin / Low / Mid Fade", desc: "Präziser Übergang, sauber ausgearbeitet", price: "28" },
-      { name: "Shape Up",              desc: "Konturenpflege & Lineup",                price: "18" },
-      { name: "Schnitt + Fade",        desc: "Schnitt · Fade · komplett in einem",      price: "38" },
-    ],
+    name:  "Kinderschnitt",
+    desc:  "Entspannte Atmosphäre · Sorgfalt von Anfang an",
+    price: "22",
+    gap:   true,
   },
   {
-    category: "Bart",
-    items: [
-      { name: "Bartpflege",            desc: "Form · Pflege · Finish",                 price: "18" },
-      { name: "Rasur",                 desc: "Hot Towel · Klinge · Aftercare",         price: "22" },
-      { name: "Schnitt + Bart",        desc: "Der komplette Look",                     price: "44" },
-    ],
+    name:  "Skin / Low / Mid Fade",
+    desc:  "Nahtlose Übergänge mit höchster Präzision",
+    price: "28",
+  },
+  {
+    name:  "Shape Up",
+    desc:  "Klare Konturen. Sofort sichtbarer Unterschied.",
+    price: "18",
+  },
+  {
+    name:  "Schnitt + Fade",
+    desc:  "Klassische Form, moderner Verlauf — aus einem Guss",
+    price: "38",
+    gap:   true,
+  },
+  {
+    name:  "Bartpflege",
+    desc:  "Perfekt geformt und sauber ausgearbeitet",
+    price: "18",
+  },
+  {
+    name:  "Rasur",
+    desc:  "Heiße Kompresse · Präzise Klinge · Gepflegtes Finish",
+    price: "22",
+  },
+  {
+    name:  "Schnitt + Bart",
+    desc:  "Frisur und Bartkonturen in perfekter Harmonie",
+    price: "44",
   },
 ]
+
+function ServiceRow({ item, index }: { item: typeof SERVICES[0]; index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.7, ease: EASE, delay: index * 0.045 }}
+    >
+      {/* Trennlinie — reagiert auf Hover des Rows */}
+      <motion.div
+        className="w-full"
+        style={{
+          height: "1px",
+          backgroundColor: index === 0
+            ? "rgba(255,255,255,0.12)"
+            : "rgba(255,255,255,0.07)",
+        }}
+        whileHover={{ backgroundColor: "rgba(160,136,104,0.3)" }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      />
+
+      {/* Zeile */}
+      <motion.div
+        className="relative flex items-center justify-between gap-10 group cursor-default"
+        style={{
+          paddingTop:    "clamp(1.1rem, 2vw, 1.5rem)",
+          paddingBottom: item.gap
+            ? "clamp(1.7rem, 3vw, 2.4rem)"
+            : "clamp(1.1rem, 2vw, 1.5rem)",
+        }}
+        whileHover="hovered"
+      >
+        {/* Hover-Hintergrund */}
+        <motion.div
+          className="absolute -inset-x-4 inset-y-0 rounded-xl pointer-events-none"
+          variants={{
+            hovered: { backgroundColor: "rgba(255,255,255,0.022)" },
+          }}
+          style={{ backgroundColor: "rgba(255,255,255,0)" }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        />
+
+        {/* Links: Name + Beschreibung */}
+        <div className="relative flex-1 min-w-0">
+          <motion.div
+            className="font-light leading-snug"
+            style={{
+              fontSize:      "clamp(1.2rem, 2vw, 1.5rem)",
+              color:         "#C8C2B8",
+              letterSpacing: "-0.014em",
+            }}
+            variants={{ hovered: { color: "#F5F3EE" } }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            {item.name}
+          </motion.div>
+          <motion.div
+            className="mt-1.5 leading-snug"
+            style={{
+              fontSize:      "clamp(0.9rem, 1.35vw, 1.05rem)",
+              color:         "rgba(245,243,238,0.58)",
+              letterSpacing: "0.02em",
+            }}
+            variants={{ hovered: { color: "rgba(245,243,238,0.82)" } }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            {item.desc}
+          </motion.div>
+        </div>
+
+        {/* Rechts: Preis */}
+        <div className="relative shrink-0 text-right">
+          <motion.div
+            className="font-display font-light leading-none tabular-nums"
+            style={{
+              color:         "#a08868",
+              letterSpacing: "-0.02em",
+            }}
+            variants={{ hovered: { color: "#c9a97c" } }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            <span
+              style={{
+                fontSize:      "clamp(0.75rem, 1vw, 0.85rem)",
+                letterSpacing: "0.1em",
+                opacity:       0.55,
+                marginRight:   "0.4em",
+                fontFamily:    "inherit",
+                fontWeight:    300,
+              }}
+            >
+              ab
+            </span>
+            <span
+              style={{
+                fontSize: "clamp(2rem, 3.5vw, 2.7rem)",
+              }}
+            >
+              {item.price} €
+            </span>
+          </motion.div>
+        </div>
+
+      </motion.div>
+    </motion.div>
+  )
+}
 
 export function Services() {
   return (
     <section
       id="leistungen"
       style={{ backgroundColor: "#1c1f1f" }}
-      className="py-24 md:py-56"
+      className="py-20 md:py-36"
     >
       <div className="max-w-5xl mx-auto px-8 sm:px-12 md:px-20">
 
-        {/* Section-Header */}
+        {/* ── Header ── */}
         <motion.div
-          className="mb-16 md:mb-36"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-16 md:mb-24"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.85, ease: EASE }}
+          transition={{ duration: 0.9, ease: EASE }}
         >
-          <p
-            className="text-[10px] tracking-[0.42em] uppercase mb-7 font-medium"
-            style={{ color: "#a08868" }}
-          >
-            Leistungen & Preise
-          </p>
+          {/* Eyebrow + Linie */}
+          <div className="flex items-center gap-5 mb-9">
+            <p
+              className="shrink-0 text-[10px] tracking-[0.44em] uppercase font-medium"
+              style={{ color: "#a08868" }}
+            >
+              Leistungen & Preise
+            </p>
+            <div
+              className="flex-1"
+              style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }}
+            />
+          </div>
+
+          {/* Headline */}
           <h2
-            className="font-display font-light leading-tight"
+            className="font-display font-light leading-[1.06] mb-8"
             style={{
-              fontSize: "clamp(2.2rem, 4.8vw, 3.6rem)",
-              color: "#F5F3EE",
-              letterSpacing: "-0.018em",
+              fontSize:      "clamp(3rem, 6vw, 5rem)",
+              color:         "#F5F3EE",
+              letterSpacing: "-0.028em",
             }}
           >
-            Dein Stil.{" "}
-            <span style={{ color: "rgba(255,255,255,0.18)" }}>Unser Handwerk.</span>
+            Präzision,
+            <br />
+            <span style={{ color: "rgba(255,255,255,0.22)" }}>die man sieht.</span>
           </h2>
+
+          {/* Intro */}
+          <p
+            className="leading-relaxed"
+            style={{
+              fontSize:      "clamp(0.95rem, 1.45vw, 1.08rem)",
+              color:         "rgba(245,243,238,0.42)",
+              letterSpacing: "0.01em",
+              maxWidth:      "52ch",
+            }}
+          >
+            Jede Leistung mit der Sorgfalt, die sie verdient.
+            Persönlich. Präzise. Jedes Mal.
+          </p>
         </motion.div>
 
-        {/* Service-Gruppen */}
+        {/* ── Leistungsliste ── */}
         <div>
-          {SERVICES.map((group, gi) => (
-            <div key={group.category}>
-
-              {/* Trenner zwischen Gruppen */}
-              {gi > 0 && (
-                <div
-                  className="my-14 md:my-28"
-                  style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.06)" }}
-                />
-              )}
-
-              {/* Kategorie-Name — zentriert, dezent */}
-              <motion.div
-                className="text-center mb-10 md:mb-20"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.8, ease: EASE, delay: gi * 0.06 }}
-              >
-                <span
-                  className="font-display font-light italic"
-                  style={{
-                    fontSize: "clamp(1rem, 1.7vw, 1.3rem)",
-                    color: "rgba(255,255,255,0.22)",
-                    letterSpacing: "0.01em",
-                  }}
-                >
-                  {group.category}
-                </span>
-              </motion.div>
-
-              {/* Leistungen */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.85, ease: EASE, delay: gi * 0.06 + 0.08 }}
-              >
-                {group.items.map((item, ii) => (
-                  <div
-                    key={item.name}
-                    className="flex items-baseline justify-between gap-10 group/item"
-                    style={{
-                      paddingTop: ii === 0 ? 0 : "clamp(3rem, 5vw, 4.5rem)",
-                    }}
-                  >
-                    {/* Links: Name + Beschreibung */}
-                    <div>
-                      <div
-                        className="font-light transition-colors duration-500 group-hover/item:text-white"
-                        style={{
-                          fontSize: "clamp(1.25rem, 2vw, 1.55rem)",
-                          color: "#E8E2D8",
-                          letterSpacing: "-0.014em",
-                        }}
-                      >
-                        {item.name}
-                      </div>
-                      <div
-                        className="mt-2.5"
-                        style={{
-                          fontSize: "12px",
-                          color: "rgba(160,136,104,0.68)",
-                          letterSpacing: "0.12em",
-                        }}
-                      >
-                        {item.desc}
-                      </div>
-                    </div>
-
-                    {/* Rechts: Preis */}
-                    <div className="shrink-0 text-right">
-                      <div
-                        className="font-display font-light leading-none transition-colors duration-500 group-hover/item:text-[#c4a882]"
-                        style={{
-                          fontSize: "clamp(1.85rem, 3.2vw, 2.6rem)",
-                          color: "#a08868",
-                          letterSpacing: "-0.028em",
-                        }}
-                      >
-                        {item.price}
-                        <span
-                          style={{
-                            fontSize: "0.38em",
-                            marginLeft: "0.1em",
-                            opacity: 0.75,
-                            verticalAlign: "super",
-                          }}
-                        >
-                          €
-                        </span>
-                      </div>
-                      <div
-                        style={{
-                          fontSize: "8px",
-                          color: "rgba(255,255,255,0.18)",
-                          letterSpacing: "0.3em",
-                          marginTop: "5px",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        ab
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-
-            </div>
+          {SERVICES.map((item, i) => (
+            <ServiceRow key={item.name} item={item} index={i} />
           ))}
+
+          {/* Abschlusslinie */}
+          <motion.div
+            style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.07)" }}
+            whileHover={{ backgroundColor: "rgba(160,136,104,0.3)" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          />
         </div>
 
-        {/* Footer */}
+        {/* ── Footer ── */}
         <motion.div
-          className="mt-20 md:mt-44 pt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="mt-10 md:mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: EASE }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.15 }}
         >
           <p
-            className="text-[11.5px] leading-relaxed"
-            style={{ color: "#383432" }}
+            style={{
+              fontSize:      "11px",
+              color:         "rgba(255,255,255,0.15)",
+              letterSpacing: "0.07em",
+            }}
           >
-            Alle Preise inkl. MwSt. · Kein Schnell-Schnell.
+            Alle Preise inkl. MwSt.
           </p>
+
           <motion.a
             href={WA_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-ghost inline-flex items-center gap-2.5 text-[10.5px] tracking-[0.22em] uppercase font-medium px-8 h-11 rounded-full"
+            className="inline-flex items-center font-medium"
             style={{
-              color: "#6a6460",
-              border: "1px solid rgba(255,255,255,0.08)",
+              fontSize:        "10.5px",
+              letterSpacing:   "0.22em",
+              textTransform:   "uppercase",
+              color:           "#6a6460",
+              border:          "1px solid rgba(255,255,255,0.09)",
+              padding:         "0 28px",
+              height:          "44px",
+              borderRadius:    "9999px",
             }}
             whileHover={{ scale: 1.015, y: -1, color: "#C8C2B8" }}
             whileTap={{ scale: 0.97 }}

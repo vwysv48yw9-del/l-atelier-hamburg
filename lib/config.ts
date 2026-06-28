@@ -29,6 +29,10 @@ export const SALON = {
   },
 
   email: "platzhalter@gmx.de",
+
+  tiktok: "https://www.tiktok.com/@latelier.du.style0",
+
+  mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Reinskamp+2A%2C+22117+Hamburg",
 } as const
 
 // WhatsApp-Link mit vorbereiteter Nachricht

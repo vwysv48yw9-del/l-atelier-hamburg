@@ -35,8 +35,8 @@ export function StickyWhatsApp() {
               href={WA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full h-14 rounded-2xl text-white text-[13px] font-semibold tracking-[0.06em] shadow-xl"
-              style={{ backgroundColor: "#1b1e1e", border: "1px solid rgba(160,136,104,0.18)" }}
+              className="wa-pulse flex items-center justify-center gap-3 w-full h-14 rounded-2xl text-white text-[13px] font-semibold tracking-[0.06em] shadow-xl"
+              style={{ backgroundColor: "#1b1e1e", border: "1px solid rgba(160,136,104,0.22)" }}
               whileHover={{ scale: 1.015 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}

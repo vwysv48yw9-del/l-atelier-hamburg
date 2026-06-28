@@ -92,34 +92,46 @@ export function About() {
             letterSpacing: "-0.015em",
           }}
         >
-          Ein moderner Salon<br />
-          in Hamburg-Billstedt.
+          Gegründet mit<br />
+          einer Überzeugung.
         </motion.h2>
 
         <motion.div variants={fadeUp(0.1)} className="flex flex-col gap-4 mb-12">
           <p className="text-[14.5px] leading-relaxed font-medium" style={{ color: "#282520" }}>
-            Persönliche Beratung. Moderne Atmosphäre. Liebe zum Detail.
+            Dass ein Haarschnitt mehr ist als ein Haarschnitt —
+            wenn derjenige, der ihn macht, wirklich zuhört.
           </p>
           <p className="text-[14.5px] leading-relaxed" style={{ color: "#4a4744" }}>
-            Inhabergeführt und mit echtem Handwerk — du weißt, wer deine Haare schneidet,
-            und du merkst es am Ergebnis.
+            Seit 2016 führen wir L&apos;Atelier inhabergeführt in Hamburg-Billstedt.
+            Kein Filialkonzept. Keine anonyme Buchung. Du kommst rein, wir kennen dich —
+            oder lernen dich kennen.
           </p>
-          <p className="text-[14.5px] leading-relaxed" style={{ color: "#4a4744" }}>
-            Kein Stress, keine Hektik. Nur ehrliche Arbeit, jedes Mal.
+          <p className="text-[14.5px] leading-relaxed" style={{ color: "#6a6764" }}>
+            Das Ergebnis spricht für sich.
           </p>
         </motion.div>
 
         <motion.div
-          variants={fadeUp(0.15)}
           className="grid grid-cols-3 gap-6 mb-12 pt-9"
           style={{ borderTop: "1px solid rgba(27,30,30,0.1)" }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
         >
           {[
-            { val: "9+",              label: "Jahre Erfahrung" },
-            { val: "1:1",             label: "Persönlich"      },
-            { val: SALON.google.score, label: "Google Score"   },
+            { val: "9+",               label: "Jahre Erfahrung" },
+            { val: "1:1",              label: "Persönlich"      },
+            { val: SALON.google.score, label: "Google Score"    },
           ].map((s) => (
-            <div key={s.label}>
+            <motion.div
+              key={s.label}
+              variants={{
+                hidden:  { opacity: 0, y: 16, scale: 0.88 },
+                visible: { opacity: 1, y: 0,  scale: 1,
+                  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+              }}
+            >
               <div
                 className="font-display font-light mb-1.5"
                 style={{ fontSize: "clamp(1.9rem, 3.2vw, 2.4rem)", color: "#1c1f1f", letterSpacing: "-0.02em" }}
@@ -129,7 +141,7 @@ export function About() {
               <div className="text-[9.5px] uppercase tracking-[0.2em]" style={{ color: "#c0b8b0" }}>
                 {s.label}
               </div>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
 
