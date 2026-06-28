@@ -6,8 +6,8 @@ import { SALON } from "@/lib/config"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-const PIN_LEFT = 59.60
-const PIN_TOP  = 45.20
+const PIN_LEFT = 40.70
+const PIN_TOP  = 41.50
 
 function GoldPin() {
   return (

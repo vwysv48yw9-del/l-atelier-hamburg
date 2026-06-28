@@ -40,7 +40,7 @@ function Testimonial({ item, index }: { item: typeof TESTIMONIALS[0]; index: num
   return (
     <motion.article
       ref={ref}
-      className="py-14 md:py-20"
+      className="py-8 md:py-11"
       style={{ borderTop: "1px solid rgba(27,30,30,0.07)" }}
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -94,7 +94,7 @@ function Testimonial({ item, index }: { item: typeof TESTIMONIALS[0]; index: num
 
 export function Reviews() {
   return (
-    <section id="bewertungen" className="py-20 md:py-36" style={{ backgroundColor: "#faf8f5" }}>
+    <section id="bewertungen" className="py-10 md:py-16" style={{ backgroundColor: "#faf8f5" }}>
       <div className="max-w-4xl mx-auto px-8 sm:px-12 md:px-20">
 
         {/* Header */}
@@ -106,7 +106,7 @@ export function Reviews() {
           transition={{ duration: 0.85, ease: EASE }}
         >
           <p
-            className="text-[10px] tracking-[0.42em] uppercase font-medium mb-10"
+            className="text-[10px] tracking-[0.42em] uppercase font-medium mb-6"
             style={{ color: "#a08868" }}
           >
             Kundenstimmen
@@ -117,7 +117,7 @@ export function Reviews() {
             <span
               className="font-display font-light leading-none"
               style={{
-                fontSize:      "clamp(4.5rem, 10vw, 8rem)",
+                fontSize:      "clamp(3.2rem, 7vw, 5.6rem)",
                 color:         "#e8e2d8",
                 letterSpacing: "-0.04em",
               }}
