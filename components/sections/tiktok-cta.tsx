@@ -24,14 +24,16 @@ const REAL_END = VIDEOS.length // index of last real video in EXTENDED
 const CARD_FRACTION = 0.65 // active card takes 65% of container width (~15% peek on each side)
 const GAP = 12 // px between cards
 
-const TikTokIcon = () => (
-  <svg
-    width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden
-    style={{ color: "rgba(245,243,238,0.35)", flexShrink: 0 }}
-  >
-    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.5a8.27 8.27 0 004.84 1.56V6.63a4.85 4.85 0 01-1.07.06z" />
-  </svg>
-)
+function TikTokIcon({ size = 14, color = "rgba(245,243,238,0.35)" }: { size?: number; color?: string }) {
+  return (
+    <svg
+      width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden
+      style={{ color, flexShrink: 0 }}
+    >
+      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.5a8.27 8.27 0 004.84 1.56V6.63a4.85 4.85 0 01-1.07.06z" />
+    </svg>
+  )
+}
 
 function ProfileCard({ imgError, setImgError }: { imgError: boolean; setImgError: (v: boolean) => void }) {
   return (
@@ -41,70 +43,91 @@ function ProfileCard({ imgError, setImgError }: { imgError: boolean; setImgError
       rel="noopener noreferrer"
       className="group"
       style={{
-        display:         "inline-flex",
+        display:         "flex",
         alignItems:      "center",
-        justifyContent:  "space-between",
-        gap:             "28px",
-        maxWidth:        "460px",
+        gap:             "18px",
+        maxWidth:        "480px",
         width:           "100%",
         backgroundColor: "rgba(255,255,255,0.028)",
         border:          "1px solid rgba(255,255,255,0.068)",
-        borderRadius:    "24px",
-        padding:         "26px 30px",
+        borderRadius:    "20px",
+        padding:         "20px 24px",
         cursor:          "pointer",
         textDecoration:  "none",
       }}
-      whileHover={{ y: -5, backgroundColor: "rgba(255,255,255,0.050)", borderColor: "rgba(160,136,104,0.32)" }}
-      whileTap={{ scale: 0.98, y: 0 }}
-      transition={{ type: "tween", duration: 0.25, ease: "easeOut" }}
+      whileHover={{ backgroundColor: "rgba(255,255,255,0.048)", borderColor: "rgba(160,136,104,0.28)" }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "tween", duration: 0.22, ease: "easeOut" }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "18px", minWidth: 0 }}>
-        <div
-          style={{
-            width: "66px", height: "66px", borderRadius: "50%",
-            overflow: "hidden", flexShrink: 0,
-            background: "linear-gradient(145deg, rgba(160,136,104,0.22) 0%, rgba(160,136,104,0.06) 100%)",
-            border: "1px solid rgba(160,136,104,0.22)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}
-        >
-          {!imgError ? (
-            <Image
-              src="/images/tiktok-profile.jpeg"
-              alt="L'atelier du style TikTok"
-              width={66} height={66}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <span className="font-display font-light italic select-none"
-              style={{ fontSize: "26px", color: "rgba(160,136,104,0.88)", letterSpacing: "-0.01em", lineHeight: 1 }}>
-              L
-            </span>
-          )}
-        </div>
-
-        <div style={{ minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-            <span
-              className="font-semibold transition-colors duration-[250ms] group-hover:text-white"
-              style={{ fontSize: "16px", color: "rgba(245,243,238,0.90)", letterSpacing: "-0.01em", whiteSpace: "nowrap" }}
-            >
-              L&apos;atelier du style
-            </span>
-            <TikTokIcon />
-          </div>
-          <span style={{ fontSize: "12.5px", color: "rgba(245,243,238,0.30)", letterSpacing: "0.025em" }}>
-            @latelier.du.style0
+      {/* Avatar */}
+      <div
+        style={{
+          width: "72px", height: "72px", borderRadius: "50%",
+          overflow: "hidden", flexShrink: 0,
+          background: "linear-gradient(145deg, rgba(160,136,104,0.22) 0%, rgba(160,136,104,0.06) 100%)",
+          border: "1.5px solid rgba(160,136,104,0.28)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}
+      >
+        {!imgError ? (
+          <Image
+            src="/images/tiktok-profile.jpeg"
+            alt="L'atelier du style TikTok"
+            width={72} height={72}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span className="font-display font-light italic select-none"
+            style={{ fontSize: "28px", color: "rgba(160,136,104,0.88)", letterSpacing: "-0.01em", lineHeight: 1 }}>
+            L
           </span>
-        </div>
+        )}
       </div>
 
-      <ArrowUpRight
-        size={20} strokeWidth={1.5}
-        className="shrink-0 transition-all duration-[250ms] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        style={{ color: "rgba(255,255,255,0.30)", flexShrink: 0 }}
-      />
+      {/* Right column: name → platform → CTA */}
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "8px" }}>
+        {/* Name + TikTok label */}
+        <div>
+          <span
+            className="font-semibold block transition-colors duration-[220ms] group-hover:text-white"
+            style={{ fontSize: "15px", color: "rgba(245,243,238,0.90)", letterSpacing: "-0.01em", marginBottom: "3px" }}
+          >
+            L&apos;atelier du style
+          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            <TikTokIcon size={12} color="rgba(245,243,238,0.50)" />
+            <span style={{ fontSize: "11px", color: "rgba(245,243,238,0.42)", letterSpacing: "0.08em" }}>
+              TikTok
+            </span>
+          </div>
+        </div>
+
+        {/* CTA pill */}
+        <div
+          style={{
+            display:         "inline-flex",
+            alignSelf:       "flex-start",
+            alignItems:      "center",
+            gap:             "6px",
+            backgroundColor: "rgba(160,136,104,0.10)",
+            border:          "1px solid rgba(160,136,104,0.22)",
+            borderRadius:    "9999px",
+            padding:         "7px 13px",
+            transition:      "background-color 0.22s ease, border-color 0.22s ease",
+          }}
+          className="group-hover:[background-color:rgba(160,136,104,0.18)!important] group-hover:[border-color:rgba(160,136,104,0.40)!important]"
+        >
+          <span style={{ fontSize: "11px", color: "#a08868", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
+            Zum TikTok-Profil
+          </span>
+          <ArrowUpRight
+            size={12} strokeWidth={1.5}
+            className="transition-transform duration-[220ms] group-hover:translate-x-px group-hover:-translate-y-px"
+            style={{ color: "#a08868" }}
+          />
+        </div>
+      </div>
     </motion.a>
   )
 }
@@ -130,7 +153,6 @@ function VideoCard({ index, isActive }: { index: number; isActive: boolean }) {
         width:           "100%",
         display:         "block",
         userSelect:      "none",
-        WebkitUserDrag:  "none" as React.CSSProperties["WebkitUserDrag"],
         transition:      "border-color 0.4s ease",
       }}
     >
@@ -169,9 +191,6 @@ function VideoCard({ index, isActive }: { index: number; isActive: boolean }) {
         >
           <Play size={20} strokeWidth={1.5} style={{ color: isActive ? "#c4a882" : "#7a6648", marginLeft: "2px", transition: "color 0.4s ease" }} />
         </div>
-        <span style={{ fontSize: "11px", color: isActive ? "rgba(245,243,238,0.32)" : "rgba(245,243,238,0.16)", letterSpacing: "0.08em", transition: "color 0.4s ease" }}>
-          @latelier.du.style0
-        </span>
       </div>
 
       <div
@@ -400,28 +419,26 @@ export function TikTokCta() {
           transition={{ duration: 0.95, ease: EASE }}
         >
 
-          {/* ── Oberer Bereich: zwei Spalten ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start mb-16">
+          {/* ── Headline ── */}
+          <div className="mb-10">
+            <p
+              className="text-[10px] tracking-[0.40em] uppercase font-medium mb-9"
+              style={{ color: "#a08868" }}
+            >
+              Einblicke
+            </p>
 
-            <div>
-              <p
-                className="text-[10px] tracking-[0.40em] uppercase font-medium mb-9"
-                style={{ color: "#a08868" }}
-              >
-                Einblicke
-              </p>
+            <h2
+              className="font-display font-light italic leading-[1.06] mb-0"
+              style={{ fontSize: "clamp(2.6rem, 5.5vw, 4.4rem)", color: "#F5F3EE", letterSpacing: "-0.024em", maxWidth: "18ch" }}
+            >
+              Überzeuge dich selbst.
+            </h2>
+          </div>
 
-              <h2
-                className="font-display font-light italic leading-[1.06] mb-0"
-                style={{ fontSize: "clamp(2.6rem, 5.5vw, 4.4rem)", color: "#F5F3EE", letterSpacing: "-0.024em", maxWidth: "18ch" }}
-              >
-                Überzeuge dich selbst.
-              </h2>
-            </div>
-
-            <div className="flex items-start lg:justify-end">
-              <ProfileCard imgError={imgError} setImgError={setImgError} />
-            </div>
+          {/* ── TikTok Profilkarte ── */}
+          <div className="mb-10">
+            <ProfileCard imgError={imgError} setImgError={setImgError} />
           </div>
 
           {/* ── Infinite Peek-Carousel (mobile + desktop) ── */}
